@@ -1,0 +1,2 @@
+1000001,testStudent,testStd@gmail.com,011-1111111,student123,0,A11EC1111
+9000001,testAdmin,testAdmin@gmail.com,012-2222222,admin123,1
