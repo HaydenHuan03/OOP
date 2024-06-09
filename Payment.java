@@ -55,7 +55,7 @@ public class Payment {
                         continue;
                     }
 
-                    //Retake contact number if key in wrong phone number					
+                    //Retake contact number if key in wrong phone number
                     if(length < 10 || length > 11){
                         System.out.println("Please provide a valid contact number\n");
                         isValid = false;
@@ -66,17 +66,13 @@ public class Payment {
                     }
 
                     //Retake contact number if key in wrong phone number
-                    //Malaysia phone number starts from "01"		
+                    //Malaysia phone number starts from "01"
                     //Check if the phone number starts with "01"
                     if (contactNumber.substring(0, 2).equals("01")) {
                         break;
                     } else {
                         System.out.println("Please provide a valid contact number\n");
                         isValid = false;
-                    }
-
-                    if(isValid == false){
-                        continue;
                     }
                 }while(isValid == false); 
 

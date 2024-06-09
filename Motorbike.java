@@ -24,10 +24,9 @@ public class Motorbike extends Vehicle{  //Inheritance
     public String getLicense(){return licenseClassB2 ; }
     
     //Normal function
-    void calcPrice(){motorPayment.setPrice(5.00) ;}
-    void payment(){motorPayment.paymentMethod() ;}
-    double getPriceNum()
-    {
+    public void calcPrice(){motorPayment.setPrice(5.00) ;}
+    public void payment(){motorPayment.paymentMethod() ;}
+    public double getPriceNum(){
         double price = motorPayment.getPrice() ;
         return price ;
     }

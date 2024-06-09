@@ -1,6 +1,6 @@
 public class Vehicle{
     protected String vehicleOwner ;
-	protected String ic ;	
+	protected String ic ;
 
     //Constructor
     public Vehicle(String vehicleOwner, String ic)
@@ -9,7 +9,7 @@ public class Vehicle{
 		this.ic = ic ;
 	}
 	
-		//Accessor
-		String getOwner(){return vehicleOwner ;}
-		String getIC(){return ic ;}	
+	//Accessor
+	public String getOwner(){return vehicleOwner ;}
+	public String getIC(){return ic ;}
 }

@@ -26,8 +26,7 @@ public class Car extends Vehicle{  //Inheritance
 	//Normal function
 	public void calcPrice(){carPayment.setPrice(10.00) ;}
     public void payment(){carPayment.paymentMethod() ;}
-    public double getPriceNum()
-	{
+    public double getPriceNum(){
 		double price = carPayment.getPrice() ;
 		return price ;
 	}
