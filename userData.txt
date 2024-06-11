@@ -1,2 +1,5 @@
 1000001,testStudent,testStd@gmail.com,011-1111111,student123,0,A11EC1111
-9000001,testAdmin,testAdmin@gmail.com,012-2222222,admin123,1
+9000001,testAdmin,testAdmin@gmail.com,012-2222222,admin123,1,-
+9000002,Eddy,eddy@gmail.com,012-3456789,eddy123,1,-
+1000002,hayden,hayden@gmail.com,019-9999999,hayden123,0,A22EC1234
+1000003,liow,liow@gmail.com,011-10908465,lcs123,0,A22EC0072

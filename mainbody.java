@@ -1,216 +1,310 @@
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.FileWriter;
 
 public class mainbody {
-    public static void main(String[] args)
-    {
-        System.out.println();
-        Scanner input = new Scanner(System.in);
-        String name, ic, model, brand, plateNumber, license;
-        int type;
-        boolean isValid = true;
+    private static Scanner inp = new Scanner(System.in);
+    private static int choice;
 
-        //Get owner name
-        System.out.println("-- Vehicle Sticker Application --");
-        System.out.print("Please enter vehicle owner's name: ");
-        name = input.nextLine();
-        
-        do{ //Looping for checking validity of IC number
-            //Get IC number
-            System.out.print("Please enter your IC(010101010101): ");
-            ic = input.nextLine();
-            System.out.println();
+    public static void main(String[] args) throws Exception{
+        User user;
+        String name, password;
+        int choice, character;
+        boolean authenticate = false, run = true;
 
-            //Check validity of IC number - does use enter letters or not
-            for (int i = 0; i < ic.length(); i++) {
-                isValid = Character.isDigit(ic.charAt(i));
-                if (isValid == false) {
-                    System.out.println("Please provide a valid IC number\n");
-                    break;
-                }
-            }
 
-            //If not valid, directly looping again to get IC number
-            if(isValid == false){
-                continue;
-            }
+        while (run) {
+            //main menu
+            choice = displayMenu(0);
 
-            //Check the length of IC number
-            if (ic.length() != 12) {
-                System.out.println("Please provide a valid IC number\n");
-                isValid = false;
-            }
-        }while(isValid == false) ;
-
-        // Add "-" to IC number
-        //010101010101 -> 010101-01-0101 
-        StringBuilder addDash = new StringBuilder(ic);
-        addDash.insert(6, '-');
-        addDash.insert(9, '-');
-        ic = addDash.toString();
-
-        boolean validType; //Use to check the validity of type
-        
-        do{ //Looping for checking the validity of type of vehicle
-            //Get vehicle type
-            System.out.println("What type of vehicle do you need to register?");
-            System.out.println("1. Motorbike");
-            System.out.println("2. Car");
-            System.out.print("Type: ");
-            type = input.nextInt();
-            input.nextLine(); // Consume newline
-            System.out.println();
-
-            validType = true ;
-
-            //Check the validity of vehicle type
-            if (type < 1 || type > 2) {
-                System.out.println("Invalid. Please choose again...\n");
-                validType = false;
-            } 
-        }while (validType == false);
-
-        //Type 1: Motorbike, Type 2(default): Car
-        switch (type) {
-            case 1: {
-                //Get motorbike details
-                System.out.print("Please enter the motorbike model (Yamaha): ");
-                model = input.nextLine();
-                System.out.print("Please enter the motorbike brand (MT-15): ");
-                brand = input.nextLine();
-                System.out.print("Please enter the motorbike plate number (ABC 1234): ");
-                plateNumber = input.nextLine();
-                System.out.println();
-
-                //Get lisence number
-                do{
-                    System.out.println("Please provide your license number (12345678)");
-                    System.out.println("(The license number is located at the upper right corner of the back side of the card)");
-                    System.out.print("License number: ");
-                    license = input.nextLine();
+            //login & register
+            if(choice == 1) {
+                character = displayMenu(1);
+                
+                if(character > 0 && character < 3) {
+                    System.out.println("Please enter your name");
+                    System.out.print(  "> ");
+                    name = inp.nextLine();
+                    System.out.println();
+                
+                    System.out.println("Please enter your password");
+                    System.out.print(  "> ");
+                    password = inp.nextLine();
                     System.out.println();
 
-                    isValid = true;
+                    if(character == 1) {
+                        user = new Student(name, "", "", password, "");
+                    }
+                    else {
+                        user = new Staff(name, "", "", password);
+                    }
 
-                    for (int i = 0; i < license.length(); i++) {
-                        isValid = Character.isDigit(license.charAt(i)) ;
-                        if (isValid == false) {
-                            System.out.println("Please provide a valid license number\n");
-                            break;
+                    authenticate = user.login();
+
+                    if(authenticate) {
+                        if(user.getAdminPrivileges() == 0) {
+                            displayStudent(user);
                         }
+                        else {
+                            displayStaff(user);
+                        }
+
+                        System.out.println("Thank you, " + user.getName() + " !");
+                        System.out.println("Logout successfully");
+                        authenticate = false;
                     }
-
-                    if(isValid == false){
-                        continue;
-                    }
-
-                    if (license.length() != 8) {
-                        System.out.println("Please provide a valid license number\n");
-                        isValid = false;
-                    } 
-                }while (isValid == false);
-
-                Motorbike userMotor = new Motorbike(name, ic, model, brand, plateNumber, license);
-                userMotor.calcPrice(); //Motorbike price - RM 5
-
-                //Inform user the details that he insert
-                System.out.println("--Your Details--\n");
-                System.out.println("Name: " + userMotor.getOwner());
-                System.out.println("IC number: " + userMotor.getIC());
-                System.out.println("Motorbike model: " + userMotor.getModel());
-                System.out.println("Motorbike brand: " + userMotor.getBrand());
-                System.out.println("Plate number: " + userMotor.getPlateNumber());
-                System.out.println("License number: " + userMotor.getLicense());
-                System.out.println("Price need to pay: RM" + userMotor.getPriceNum() + "\n");
-
-                userMotor.payment(); //for payment purpose
-
-                //Store the details into a file
-                try (BufferedWriter file = new BufferedWriter(new FileWriter("vehicleInfo.txt", true))) {
-                    file.write(userMotor.getOwner() + "\t" +
-                               userMotor.getIC() + "\t" +
-                               "Motorbike" + "\t" +
-                               userMotor.getModel() + "\t" +
-                               userMotor.getBrand() + "\t" +
-                               userMotor.getPlateNumber() + "\t" +
-                               userMotor.getLicense() + "\n");
-                } catch (IOException e) {
-                    System.out.println("File cannot be opened");
                 }
-                break;
             }
-        
-            default: {
-                //Get car details
-                System.out.print("Please enter the car model (Proton): ");
-                model = input.nextLine();
-                System.out.print("Please enter the car brand (Saga): ");
-                brand = input.nextLine();
-                System.out.print("Please enter the car plate number (ABC 1234): ");
-                plateNumber = input.nextLine();
-                System.out.println();
+            else if(choice == 2) {
+                boolean registerStatus = false;
+                character = displayMenu(2);
 
-                //Get license number
-                do{
-                    System.out.println("Please provide your license number (12345678)");
-                    System.out.println("(The license number is located at the upper right corner of the back side of the card)");
-                    System.out.print("License number: ");
-                    license = input.nextLine();
-                    System.out.println();
+                while(!registerStatus && (character > 0 && character < 3)) {
+                    String[] registerInfo = userRegister();
 
-                    isValid = true;
+                    if(character == 1) {
+                        System.out.println("Enter your matric number");
+                        System.out.print(  "> ");
+                        registerInfo[4] = inp.nextLine();
 
-                    for (int i = 0; i < license.length(); i++) {
-                        isValid = Character.isDigit(license.charAt(i)) ;
-                        if (isValid == false) {
-                            System.out.println("Please provide a valid license number\n");
-                            break;
-                        }
+                        user = new Student( registerInfo[0],
+                                            registerInfo[1],
+                                            registerInfo[2],
+                                            registerInfo[3],
+                                            registerInfo[4]);
+
+                    }
+                    else {
+                        user = new Staff(   registerInfo[0],
+                                            registerInfo[1],
+                                            registerInfo[2],
+                                            registerInfo[3]);
                     }
 
-                    if(isValid == false){
-                        continue;
-                    }
-
-                    if (license.length() != 8) {
-                        System.out.println("Please provide a valid license number\n");
-                        isValid = false ;
-                    }
-                }while(isValid == false);
-
-                Car userCar = new Car(name, ic, model, brand, plateNumber, license);
-                userCar.calcPrice(); //Car price - RM 10
-
-                //Inform user the details that he insert
-                System.out.println("--Your Details--\n");
-                System.out.println("Name: " + userCar.getOwner());
-                System.out.println("IC number: " + userCar.getIC());
-                System.out.println("Motorbike model: " + userCar.getModel());
-                System.out.println("Motorbike brand: " + userCar.getBrand());
-                System.out.println("Plate number: " + userCar.getPlateNumber());
-                System.out.println("License number: " + userCar.getLicense());
-                System.out.println("Price need to pay: RM" + userCar.getPriceNum() + "\n");
-
-                userCar.payment(); //for payment purpose
-
-                //Store the details into a file
-                try (BufferedWriter file = new BufferedWriter(new FileWriter("vehicleInfo.txt", true))) {
-                    file.write(userCar.getOwner() + "\t" +
-                               userCar.getIC() + "\t" +
-                               "Car" + "\t" +
-                               userCar.getModel() + "\t" +
-                               userCar.getBrand() + "\t" +
-                               userCar.getPlateNumber() + "\t" +
-                               userCar.getLicense() + "\n");
-                } catch (IOException e) {
-                    System.out.println("File cannot be opened");
+                    registerStatus = user.register();
                 }
-                break;
+            }
+            else {run = false; break;}
+        }
+    }
+
+    public static String[] userRegister() {
+        String[] registerInfo = new String[5];
+ 
+        System.out.println("Please enter user name : ");
+        System.out.print(  "> ");
+        registerInfo[0] = inp.nextLine();
+
+        System.out.println("Please enter your email : ");
+        System.out.print(  "> ");
+        registerInfo[1] = inp.nextLine();
+
+        System.out.println("Please enter your contact number : ");
+        System.out.print(  "> ");
+        registerInfo[2] = inp.nextLine();
+
+        System.out.println("Please enter your password : ");
+        System.out.print(  "> ");
+        registerInfo[3] = inp.nextLine();
+
+        return registerInfo;
+    }
+
+    public static int displayMenu(int menuNum) {
+        switch (menuNum) {
+            case 0:
+                return displayAuthenticateMenu();
+
+            case 1:
+                return displayLoginMenu();
+
+            case 2:
+                return displayRegisterMenu();
+
+            case 3:
+                return displayMainMenu();
+
+            case 4:
+                return displayStudentHostelRegistration();
+
+            case 5:
+                return displayStaffHostelRegistration();
+
+            case 6:
+                return displayStudentAppointment();
+
+            case 7:
+                return displayStaffAppointment();
+        
+            default:
+                return -1;
+        }
+    }
+
+    public static int displayAuthenticateMenu() {
+        System.out.println("Welcome to KTDI Management System");
+        System.out.println("1. Login");
+        System.out.println("2. Register");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayLoginMenu() {
+        System.out.println("Login as :");
+        System.out.println("1. Student");
+        System.out.println("2. Staff");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayRegisterMenu() {
+        System.out.println("Register as :");
+        System.out.println("1. Student");
+        System.out.println("2. Staff");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayMainMenu() {
+        System.out.println("Main Menu :");
+        System.out.println("1. Hostel Registration");
+        System.out.println("2. Appointment");
+        System.out.println("3. Court Booking");
+        System.out.println("4. Vehicle");
+        System.out.println("5. Report");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStudentHostelRegistration() {
+        return choice;
+    }
+
+    public static int displayStaffHostelRegistration() {
+        return choice;
+    }
+
+    public static int displayStudentAppointment() {
+        System.out.println("Appointment Menu");
+        System.out.println("1. Make Appointment");
+        System.out.println("2. Display Appointment");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        int choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStaffAppointment() {
+        System.out.println("Appointment Menu");
+        System.out.println("1. Check Appointment");
+        System.out.println("2. Approve Appointment");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static void displayStudent(User user) throws Exception {
+        Student student = new Student(user.getName(), user.getEmail(), user.getContact(), user.getPassword(), "");
+        student.findStud();
+
+        boolean run = true;
+
+        while(run) {
+            choice = displayMenu(3);
+            int index = choice;
+
+            if(index > 0 && index < 6){
+                switch (index) {
+                    case 1:
+                        break;
+
+                    case 2:
+                        do {
+                            choice = displayMenu(6);
+                            if(choice == 1) {
+                                student.makeAppointment(inp);
+                            }
+                            else if(choice == 2) {
+                                student.displayAppointment();
+                            }
+                            else break;
+
+                        }while(choice == 1 || choice == 2);
+                        break;
+
+                    case 3:
+                        break;
+
+                    case 4:
+                        break;
+                
+                    default:
+                        break;
+                }
             }
         }
+    }
 
-        input.close();
+    public static void displayStaff(User user) throws Exception {
+        Staff staff = new Staff(user.getName(), user.getEmail(), user.getContact(), user.getPassword());
+        staff.findStaf();
+        staff.readAppointment();
+
+        boolean run = true;
+
+        while(run) {
+            choice = displayMenu(3);
+            int index = choice;
+
+            if(index > 0 && index < 6){
+                switch (index) {
+                    case 1:
+                        break;
+
+                    case 2:
+                        do {
+                            choice = displayMenu(7);
+                            if(choice == 1) {
+                                staff.checkAppointment();
+                            }
+                            else if(choice == 2) {
+                                staff.approveAppointment(inp);
+                            }
+                            else break;
+
+                        } while(choice == 1 || choice == 2);
+                        break;
+
+                    case 3:
+                        break;
+
+                    case 4:
+                        break;
+                
+                    default:
+                        run = false;
+                        break;
+                }
+            }
+        }
     }
 }
