@@ -8,7 +8,7 @@ public class CourtBooking {
     private String timeSlot;
     private User Booker;
 
-    public CourtBooking(){
+    public CourtBooking(User Booker){
         courtNumber = " ";
         timeSlot = " ";
         this.Booker = Booker;
@@ -34,7 +34,8 @@ public class CourtBooking {
         // Compare the status with the user input to check whether the court is available or not
         for (int i = 0; i < 20; i++) {
             if (timeSlot.equals(court_Info[i][0]) && courtNumber.equals(court_Info[i][1]) && "y".equals(court_Info[i][2])) {
-                System.out.println("Successfully booked.\n");
+                System.out.println("Hi, Mr/Ms " + Booker.getName() + "\n");//"\nSuccessfully booked.\n");
+                System.out.println("You have successfully booked the court");
 
                 // Update the status in the courtInfo array and the file
                 court_Info[i][2] = "n";
@@ -43,6 +44,7 @@ public class CourtBooking {
             }
         }
 
+        System.out.println("I'm sorry Mr/Ms " + Booker.getName() + "\n");
         System.out.println("Court not available. Please select again...\n");
         return false;
     }

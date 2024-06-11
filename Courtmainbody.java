@@ -19,7 +19,7 @@ public class Courtmainbody {
             switch(bookOption){
                 case '1':{
                     do{
-                        CourtBooking court = new CourtBooking();
+                        CourtBooking court = new CourtBooking(); //Later put user inside
                         court.printAvailableTimeSlot();
 
                         //ask user to choose what time slot they want and also the court number
