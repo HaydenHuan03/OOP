@@ -3,7 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.FileWriter;
 
-public class mainbody {
+public class Vehiclemainbody {
     public static void main(String[] args)
     {
         System.out.println();
