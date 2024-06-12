@@ -8,16 +8,15 @@ public class CourtBooking {
     private String timeSlot;
     private User Booker;
 
-    public CourtBooking(User Booker){
-        courtNumber = " ";
-        timeSlot = " ";
-        this.Booker = Booker;
-    }
+    //Constructor
+    public CourtBooking(User Booker){this.Booker = Booker;}
 
+    //Mutator
     public void setCourt(String courtNumber){this.courtNumber = courtNumber;}
     public void setTime_slot(String timeSlot){this.timeSlot = timeSlot;}
-    public boolean bookingCourt()
-    {
+
+    //Normal function
+    public boolean bookingCourt(){
         String[][] court_Info = new String[20][3] ; //store court info
 
         try (BufferedReader reader = new BufferedReader(new FileReader("courtInfo.txt"))) {
