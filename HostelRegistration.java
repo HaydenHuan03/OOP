@@ -1,240 +1,100 @@
 import java.io.*;
 import java.util.Scanner;
 
-class HostelRegistration {
-    private Student student;
-    private Staff staff;
-    private double price;
-    private boolean registered;
-    private String registrationDate;
-    private String contactNum;
+public class HostelRegistration {
+    private String name ;
+    private String block ;
+    private int roomNumber ;
 
-    public HostelRegistration(Student student, Staff staff, double price, boolean registered, String registrationDate, String contactNum) {
-        this.student = student;
-        this.staff = staff;
-        this.price = price;
-        this.registered = registered;
-        this.registrationDate = registrationDate;
-        this.contactNum = contactNum;
+    public void setName(String name){this.name = name;}
+    public void setBlock(String block){this.block = block;}
+    public void setRoomNum(int roomNumber){this.roomNumber = roomNumber;}
+
+    public String getName(){return name;}
+    public String getBlock(){return block;}
+
+    public void OpenInputFile(String fileName, int[][] Room) { //[][3]
+        try (Scanner inp = new Scanner(new File(fileName))) {
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (inp.hasNextInt()) {
+                        Room[i][j] = inp.nextInt();
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error\n");
+            System.exit(0);
+        }
     }
 
-    public boolean Register(String[][] Info) {
-        // Verify user and register
-        for (String[] userInfo : Info) {
-            if (student != null && student.getMatricNum().equals(userInfo[0]) && student.getContact().equals(userInfo[1])) {
-                registered = true;
-                return true;
-            } else if (staff != null && staff.getContact().equals(userInfo[1])) {
-                registered = true;
-                return true;
+    public void OpenOutputFile(String fileName, int[][] Room) {
+        try (PrintWriter op = new PrintWriter(new FileWriter(fileName))) {
+            for (int i = 0; i < 30; i++) {
+                if (roomNumber == Room[i][0]) {
+                    if (Room[i][1] == 1) {
+                        op.println(Room[i][0] + "\t" + 0 + "\t" + Room[i][2]);
+                    } else {
+                        op.println(Room[i][0] + "\t" + Room[i][1] + "\t" + 0);
+                    }
+                } else {
+                    op.println(Room[i][0] + "\t" + Room[i][1] + "\t" + Room[i][2]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean Register(String fileName, int[][] Room) {
+        String userRoomFile = name + "_Room.txt";
+        String isEmpty = "";
+
+        try (Scanner inp = new Scanner(new File(userRoomFile))) {
+            if (inp.hasNext()) {
+                isEmpty = inp.next();
+            }
+        } catch (FileNotFoundException e) {
+            // File does not exist; treat as empty
+        }
+
+        for (int i = 0; i < 30; i++) {
+            if (Room[i][0] == roomNumber) {
+                if (Room[i][1] == 1 || Room[i][2] == 1) {
+                    if (!isEmpty.isEmpty()) {
+                        System.out.println("Already register room !");
+                        return false;
+                    } else {
+                        OpenOutputFile(fileName, Room);
+                        return true;
+                    }
+                }
             }
         }
-        registered = false;
+
         return false;
     }
 
-    public double offerPrice() {
-        return price;
-    }
-
-    public void printRoomInfo(String[][] Info) {
-        for (String[] roomInfo : Info) {
-            System.out.println("Name: " + roomInfo[0] + ", Matric: " + roomInfo[1] + ", Block: " + roomInfo[2] + ", Room Number: " + roomInfo[3] + ", Price: " + roomInfo[4] + ", Registartion Date: " + registrationDate);
+    public void saveRegister(String type) {
+        String fileName = name + "_Room.txt";
+        try (PrintWriter UserOp = new PrintWriter(new FileWriter(fileName, true))) {
+            UserOp.println(type + " " + block + " " + roomNumber);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public Student getStudent() {
-        return student;
-    }
+    public void CheckAvailableRoom(String fileName) {
+        int[][] Room = new int[30][3];
+        OpenInputFile(fileName, Room);
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(boolean registered) {
-        this.registered = registered;
-    }
-
-    public String getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(String registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public String getContactNum() {
-        return contactNum;
-    }
-
-    public void setContactNum(String contactNum) {
-        this.contactNum = contactNum;
-    }
-}
-
-class SingleRoom extends HostelRegistration {
-    private Payment roomPayment;
-    private String block;
-    private String roomNumber;
-
-    public SingleRoom(Student student, Staff staff, double price, boolean registered, String registrationDate, String contactNum, String block, String roomNumber) {
-        super(student, staff, price, registered, registrationDate, contactNum);
-        this.block = block;
-        this.roomNumber = roomNumber;
-    }
-
-    public boolean Register() throws IOException {
-        // Logic for Single Room registration
-        Scanner inputFile = new Scanner(new File("roomData.txt"));
-        while (inputFile.hasNextLine()) {
-            String line = inputFile.nextLine();
-            String[] roomInfo = line.split(", ");
-            if (roomInfo[0].equals(block) && roomInfo[1].equals(roomNumber) && roomInfo[2].equals("available")) {
-                FileWriter outputFile = new FileWriter("roomData.txt", true);
-                outputFile.write(getStudent().getName() + ", " + getStudent().getMatricNum() + ", " + block + ", " + roomNumber + ", " + "single" + ", " + offerPrice() + "\n");
-                outputFile.close();
-                return true;
+        System.out.println("Available Room of " + getBlock());
+        System.out.println("=====================");
+        for (int i = 0; i < 30; i++) {
+            if (Room[i][1] == 1 || Room[i][2] == 1) {
+                System.out.println(Room[i][0]);
             }
         }
-        inputFile.close();
-        return false;
-    }
-
-
-    public void calcPrice(boolean isStaff) {
-        if (isStaff) {
-            super.setPrice(4 * 0.9); // 10% discount for staff
-        } else {
-            super.setPrice(4);
-        }
-    }
-
-    public void checkAvailableRoom() throws IOException {
-        Scanner inputFile = new Scanner(new File("roomData.txt"));
-        while (inputFile.hasNextLine()) {
-            String line = inputFile.nextLine();
-            String[] roomInfo = line.split(", ");
-            if (roomInfo[4].equals("single") && roomInfo[2].equals("available")) {
-                System.out.println("Block: " + roomInfo[0] + ", Room Number: " + roomInfo[1]);
-            }
-        }
-        inputFile.close();
-    }
-
-    public Payment getRoomPayment() {
-        return roomPayment;
-    }
-
-    public void setRoomPayment(Payment roomPayment) {
-        this.roomPayment = roomPayment;
-    }
-
-    public String getBlock() {
-        return block;
-    }
-
-    public void setBlock(String block) {
-        this.block = block;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-}
-
-class DoubleRoom extends HostelRegistration {
-    private Payment roomPayment;
-    private String block;
-    private String roomNumber;
-
-    public DoubleRoom(Student student, Staff staff, double price, boolean registered, String registrationDate, String contactNum, String block, String roomNumber) {
-        super(student, staff, price, registered, registrationDate, contactNum);
-        this.block = block;
-        this.roomNumber = roomNumber;
-    }
-
-    public boolean Register() throws IOException {
-        // Logic for Double Room registration
-        Scanner inputFile = new Scanner(new File("roomData.txt"));
-        while (inputFile.hasNextLine()) {
-            String line = inputFile.nextLine();
-            String[] roomInfo = line.split(", ");
-            if (roomInfo[0].equals(block) && roomInfo[1].equals(roomNumber) && roomInfo[2].equals("available")) {
-                FileWriter outputFile = new FileWriter("roomData.txt", true);
-                outputFile.write(getStudent().getName() + ", " + getStudent().getMatricNum() + ", " + block + ", " + roomNumber + ", " + "double" + ", " + offerPrice() + "\n");
-                outputFile.close();
-                return true;
-            }
-        }
-        inputFile.close();
-        return false;
-    }
-
-    public void calcPrice(boolean isStaff) {
-        if (isStaff) {
-            super.setPrice(6 * 0.9); // 10% discount for staff
-        } else {
-            super.setPrice(6);
-        }
-    }
-
-    public void checkAvailableRoom() throws IOException {
-        Scanner inputFile = new Scanner(new File("roomData.txt"));
-        while (inputFile.hasNextLine()) {
-            String line = inputFile.nextLine();
-            String[] roomInfo = line.split(", ");
-            if (roomInfo[4].equals("double") && roomInfo[2].equals("available")) {
-                System.out.println("Block: " + roomInfo[0] + ", Room Number: " + roomInfo[1]);
-            }
-        }
-        inputFile.close();
-    }
-
-    public Payment getRoomPayment() {
-        return roomPayment;
-    }
-
-    public void setRoomPayment(Payment roomPayment) {
-        this.roomPayment = roomPayment;
-    }
-
-    public String getBlock() {
-        return block;
-    }
-
-    public void setBlock(String block) {
-        this.block = block;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
+        System.out.println();
     }
 }

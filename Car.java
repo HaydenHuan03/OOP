@@ -33,7 +33,7 @@ public class Car extends Vehicle{  //Inheritance
     public String getLicense(){return licenseClassD ; }
 
 	//Normal function
-	public void calcPrice(){carPayment.setPrice(10.00) ;}
+	public void calcPrice(){carPayment.setPrice(10) ;}
     public void payment(){carPayment.paymentMethod() ;}
     public double getPriceNum(){return carPayment.getPrice() ;}
 
