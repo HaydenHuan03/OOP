@@ -45,11 +45,11 @@ class User {
         return password;
     }
 
-    public boolean getAdminPrivileges() {
-        return adminPrivileges;
+    public int getAdminPrivileges() {
+        return (adminPrivileges ? 1 : 0);
     }
 
-    public boolean login(String name, String password) throws Exception{
+    public boolean login() throws Exception{
         // input file to read all the user data from file
         File file = new File("userData.txt");
         Scanner inputFile = new Scanner(file);
@@ -59,8 +59,12 @@ class User {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] userInfo = line.split(","); // saperate this line into few string by using "," as break point
 
-            if(name == userInfo[1] && password == userInfo[4]) { // if the name and password is correct, return true which mean successful login
+            // separate the student and staff data by checking the adminPrivileges
+            // if the name and password is correct, return true which mean successful login
+            if(name.equals(userInfo[1]) && password.equals(userInfo[4]) && getAdminPrivileges() == Integer.parseInt(userInfo[5])) { 
                 inputFile.close();
+                email = userInfo[2];
+                contact = userInfo[3];
                 return true;
             }
         }
@@ -78,7 +82,7 @@ class User {
 
             // check whether the new user's name, email or contact number is same with the exist user or not
             // if there is same, return false
-            if((name == userInfo[1]) || (email == userInfo[2]) || (contact == userInfo[3])) { 
+            if((name.equals(userInfo[1])) || (email.equals(userInfo[2])) || (contact.equals(userInfo[3]))) { 
                 inputFile.close();
                 return false;
             }
@@ -95,10 +99,10 @@ class Student extends User {
     private String matricNum;
     private Appointment appointment;
     
-    public Student(String name, String email, String contact, String password, int studentID, String matricNum) {
+    public Student(String name, String email, String contact, String password, String matricNum) throws Exception{
         super(name, email, contact, password, false);
-        this.studentID = studentID;
         this.matricNum = matricNum;
+        calculateStudentID();
     }
 
     public int getStudentID() {
@@ -109,7 +113,7 @@ class Student extends User {
         return matricNum;
     }
 
-    public int calculateStudentID() throws Exception{
+    public void calculateStudentID() throws Exception{
         Scanner inputFile = new Scanner(new File("userData.txt"));
         int highest = 0;
 
@@ -119,20 +123,39 @@ class Student extends User {
 
             // find the highest student id among current user 
             // use Integer.valueOf to convert String to integer
-            if(Integer.valueOf(userInfo[0]) > highest) { 
-                highest = Integer.valueOf(userInfo[0]);
+            // check the id number to avoid to assign an staff id to student
+            if((Integer.parseInt(userInfo[0]) > highest) && (Integer.parseInt(userInfo[0])/9000000 < 1)) { 
+                highest = Integer.parseInt(userInfo[0]);
             }
         }
         studentID = highest + 1; //assign the incremented highest id to studentId
 
         inputFile.close();
-        return studentID;
+    }
+
+    public void findStud() throws Exception{ // function to complete the private data initialization
+        Scanner inputFile = new Scanner(new File("userData.txt"));
+
+        while(inputFile.hasNextLine()) {
+            String line = inputFile.nextLine(); // read a whole line in file
+            String[] userInfo = line.split(","); // saperate this line into few string by using "," as break point
+
+            if(userInfo[1].equals(super.getName())) { // check the name is same with user key in
+                matricNum = userInfo[6];
+                studentID = Integer.valueOf(userInfo[0]);
+                inputFile.close();
+                break;
+            }
+        }
+
+        return;
     }
 
     @Override
-    public boolean login(String name, String password) throws Exception{
-        if(super.login(name, password)) {
-            System.out.println("Welcome, " + name);
+    public boolean login() throws Exception{
+        if(super.login()) {
+            System.out.println("Welcome, " + super.getName());
+            findStud();
             return true;
         }
         else {
@@ -148,10 +171,10 @@ class Student extends User {
 
             while(inputFile.hasNextLine()) {
                 String line = inputFile.nextLine(); // read a whole line in file
-                String[] userInfo = line.split(","); // saperate this line into few string by using "," as break point
+                String[] userInfo = line.split(",");// saperate this line into few string by using "," as break point
     
-                if(matricNum == userInfo[6]) { // compare the key in matric number with registered matric number
-                    System.out.println("User Existed !");
+                if(matricNum.equals(userInfo[6])) { // compare the key in matric number with registered matric number
+                    System.out.println("User Existed ! Please retype your information");
                     inputFile.close();
                     return false; // if same, return false since the user already exist
                 }
@@ -159,7 +182,7 @@ class Student extends User {
 
             // open output file to assign user data to userData.txt
             FileWriter outputFile = new FileWriter("userData.txt", true); 
-            outputFile.write(calculateStudentID() + "," +
+            outputFile.write(studentID + "," +
                              getName() + "," +
                              getEmail() + "," +
                              getContact() + "," +
@@ -175,14 +198,13 @@ class Student extends User {
             return true;
         }
         else {
-            System.out.println("User Existed !");
+            System.out.println("User Existed ! Please retype your information");
             return false;
         }
     }
 
     //*Appointment
-    public void makeAppointment() throws Exception{
-        Scanner input = new Scanner(System.in);
+    public void makeAppointment(Scanner input) throws Exception{
         int type;
         String date, time;
 
@@ -209,10 +231,8 @@ class Student extends User {
         time = input.nextLine(); //set the time
 
 
-        input.close();
         appointment = new Appointment(type, date, time, matricNum); 
         appointment.addAppointment(); //save appointment made into file
-
     }
 
     public void displayAppointment() throws Exception{
@@ -224,7 +244,7 @@ class Student extends User {
 
             // display the appointment information if this appointment is made by this student
             // by comparing the appointment owner's matric and this student's matric number
-            if(appointmentInfo[5] == matricNum) { 
+            if(matricNum.equals(appointmentInfo[5])) { 
                 for(int i = 0; i < 5; i++) {
                     System.out.print(appointmentInfo[i] + ", ");
                 }
@@ -240,17 +260,17 @@ class Staff extends User {
     private int staffID;
     private ArrayList<Appointment> appointment;
     
-    public Staff(String name, String email, String contact, String password, int staffID) {
+    public Staff(String name, String email, String contact, String password) throws Exception{
         super(name, email, contact, password, true);
         appointment = new ArrayList<>();
-        this.staffID = staffID;
+        calculateStaffID();
     }
     
     public int getStaffID() {
         return staffID;
     }
 
-    public int calculateStaffID() throws Exception{
+    public void calculateStaffID() throws Exception{
         Scanner inputFile = new Scanner(new File("userData.txt"));
         int highest = 0;
 
@@ -260,20 +280,37 @@ class Staff extends User {
 
             // find the highest staff id among current user 
             // use Integer.valueOf to convert String to integer
-            if(Integer.valueOf(userInfo[0]) > highest) { 
-                highest = Integer.valueOf(userInfo[0]);
+            if(Integer.parseInt(userInfo[0]) > highest) { 
+                highest = Integer.parseInt(userInfo[0]);
             }
         }
         staffID = highest + 1; //assign the incremented highest id to staffId
 
         inputFile.close();
-        return staffID;
+    }
+
+    public void findStaf() throws Exception{ // function to complete the private data initialization
+        Scanner inputFile = new Scanner(new File("userData.txt"));
+
+        while(inputFile.hasNextLine()) {
+            String line = inputFile.nextLine(); // read a whole line in file
+            String[] userInfo = line.split(","); // saperate this line into few string by using "," as break point
+
+            if(userInfo[1].equals(super.getName())) { // check the name is same with user key in
+                staffID = Integer.valueOf(userInfo[0]);
+                inputFile.close();
+                break;
+            }
+        }
+
+        return;
     }
 
     @Override
-    public boolean login(String name, String password) throws Exception{
-        if(super.login(name, password)) {
-            System.out.println("Welcome, " + name);
+    public boolean login() throws Exception{
+        if(super.login()) {
+            System.out.println("Welcome, " + super.getName());
+            findStaf();
             return true;
         }
         else {
@@ -287,12 +324,12 @@ class Staff extends User {
         if(super.register()) {
             // open output file to assign user data to userData.txt
             FileWriter outputFile = new FileWriter("userData.txt", true);
-            outputFile.write(calculateStaffID() + "," +
+            outputFile.write(staffID + "," +
                              getName() + "," +
                              getEmail() + "," +
                              getContact() + "," +
                              getPassword() + "," +
-                             getAdminPrivileges() + "\n");
+                             getAdminPrivileges() + "," + "-\n");
 
             outputFile.close();
 
@@ -300,7 +337,7 @@ class Staff extends User {
             return true;
         }
         else {
-            System.out.println("User Existed !");
+            System.out.println("User Existed ! Please retype your information");
             return false;
         }
     }
@@ -308,19 +345,17 @@ class Staff extends User {
     //*Apointment
     public void readAppointment() throws Exception{
         Scanner inputFile  = new Scanner(new File("appointmentData.txt"));
-        int i = 0; // use i to allocate the appointment array list
+        int i = 0; // use i to locate the appointment array list
 
         while(inputFile.hasNextLine()) {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] appointmentInfo = line.split(", "); // saperate this line into few string by using "," as break point
 
             //read all the data from apointmentData file and assign those to an array list
-            appointment.get(i).setId(Integer.valueOf(appointmentInfo[0]));
+            appointment.add(new Appointment(1, appointmentInfo[2], appointmentInfo[3], appointmentInfo[5]));
+            appointment.get(i).setId(Integer.parseInt(appointmentInfo[0]));
             appointment.get(i).setType(appointmentInfo[1]);
-            appointment.get(i).setDate(appointmentInfo[2]);
-            appointment.get(i).setTime(appointmentInfo[3]);
             appointment.get(i).setStatus(appointmentInfo[4]);
-            appointment.get(i).setOwnerMatric(appointmentInfo[5]);
             i++;
         }
 
@@ -334,10 +369,8 @@ class Staff extends User {
         }
     }
 
-    public void approveAppointment() throws Exception{
-        Scanner input = new Scanner(System.in);
+    public void approveAppointment(Scanner input) throws Exception{
         int appointNum, decision; // decision decide the status of appointment
-        checkAppointment();
 
         System.out.print("\nSelect an Appointment (appointment number) : ");
         appointNum = input.nextInt(); // make decision to approve which appointment
@@ -360,7 +393,6 @@ class Staff extends User {
         }
 
         modifyAppointmentFile(); // save all the change to appointment file in this function
-        input.close();
     }
 
     public void modifyAppointmentFile() throws Exception{
