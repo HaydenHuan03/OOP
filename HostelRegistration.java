@@ -6,13 +6,16 @@ public class HostelRegistration {
     private String block ;
     private int roomNumber ;
 
+    //Mutator
     public void setName(String name){this.name = name;}
     public void setBlock(String block){this.block = block;}
     public void setRoomNum(int roomNumber){this.roomNumber = roomNumber;}
 
+    //Accessor
     public String getName(){return name;}
     public String getBlock(){return block;}
 
+    //
     public void OpenInputFile(String fileName, int[][] Room) { //[][3]
         try (Scanner inp = new Scanner(new File(fileName))) {
             for (int i = 0; i < 30; i++) {

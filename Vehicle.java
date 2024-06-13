@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Vehicle{
     protected String vehicleOwner ;
 	protected String ic ;
@@ -18,8 +19,7 @@ public class Vehicle{
 	public String getIC(){return ic ;}
 
 	//Normal function
-	public Vehicle setDetail(){
-        Scanner input = new Scanner(System.in);
+	public Vehicle setDetail(Scanner input){
 		String name, ICnum;
         boolean isValid = true;
 
@@ -36,7 +36,7 @@ public class Vehicle{
 
             //Check validity of IC number - does use enter letters or not
             for (int i = 0; i < ICnum.length(); i++) {
-                isValid = Character.isDigit(ic.charAt(i));
+                isValid = Character.isDigit(ICnum.charAt(i));
                 if (isValid == false) {
                     System.out.println("Please provide a valid IC number\n");
                     break;
@@ -57,21 +57,18 @@ public class Vehicle{
 
 		// Add "-" to IC number
         //010101010101 -> 010101-01-0101
-        StringBuilder addDash = new StringBuilder(ic);
+        StringBuilder addDash = new StringBuilder(ICnum);
         addDash.insert(6, '-');
         addDash.insert(9, '-');
         ICnum = addDash.toString();
-
-		input.close();
 
 		Vehicle vehicle = new Vehicle(name, ICnum);
 
 		return vehicle;
 	}
 
-	public int vehicleType(){
+	public int vehicleType(Scanner input){
 		int type;
-		Scanner input = new Scanner(System.in);
 		boolean validType; //Use to check the validity of type
 
 		do{ //Looping for checking the validity of type of vehicle
@@ -87,13 +84,11 @@ public class Vehicle{
             validType = true ;
 
             //Check the validity of vehicle type
-            if (type < 1 || type > 2) {
+            if (1 > type || type > 2) {
                 System.out.println("Invalid. Please choose again...\n");
                 validType = false;
             }
         }while (validType == false);
-
-		input.close();
 
 		return type;
 	}

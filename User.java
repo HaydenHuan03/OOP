@@ -8,7 +8,7 @@ class User {
     private String contact;
     private String password;
     private boolean adminPrivileges; //to determine the user is student(0) or staff(1)
-    
+
     public User(String name, String email, String contact, String password, boolean adminPrivileges) {
         this.name = name;
         this.email = email;
@@ -17,43 +17,22 @@ class User {
         this.adminPrivileges = adminPrivileges;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    //Mutator
+    public void setEmail(String email) {this.email = email;}
+    public void setContact(String contact) {this.contact = contact;}
+    public void setPassword(String password) {this.password = password;}
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getAdminPrivileges() {
-        return (adminPrivileges ? 1 : 0);
-    }
+    //Accessor
+    public String getName() {return name;}
+    public String getEmail() {return email;}
+    public String getContact() {return contact;}
+    public String getPassword() {return password;}
+    public int getAdminPrivileges() {return (adminPrivileges ? 1 : 0);}
 
     public boolean login() throws Exception{
         // input file to read all the user data from file
         File file = new File("userData.txt");
         Scanner inputFile = new Scanner(file);
-        
 
         while(inputFile.hasNextLine()) {
             String line = inputFile.nextLine(); // read a whole line in file
@@ -68,14 +47,14 @@ class User {
                 return true;
             }
         }
-        
+
         inputFile.close();
         return false; // if there is a wrong on name or password, return false which mean failed to login
     }
 
     public boolean register() throws Exception{
         Scanner inputFile = new Scanner(new File("userData.txt"));
-        
+
         while(inputFile.hasNextLine()) {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] userInfo = line.split(","); // saperate this line into few string by using "," as break point
@@ -91,27 +70,22 @@ class User {
         inputFile.close();
         return true;
     }
-    
 }
 
 class Student extends User {
     private int studentID;
     private String matricNum;
     private Appointment appointment;
-    
+
     public Student(String name, String email, String contact, String password, String matricNum) throws Exception{
         super(name, email, contact, password, false);
         this.matricNum = matricNum;
         calculateStudentID();
     }
 
-    public int getStudentID() {
-        return studentID;
-    }
-
-    public String getMatricNum() {
-        return matricNum;
-    }
+    //Accessor
+    public int getStudentID() {return studentID;}
+    public String getMatricNum() {return matricNum;}
 
     public void calculateStudentID() throws Exception{
         Scanner inputFile = new Scanner(new File("userData.txt"));
@@ -172,7 +146,7 @@ class Student extends User {
             while(inputFile.hasNextLine()) {
                 String line = inputFile.nextLine(); // read a whole line in file
                 String[] userInfo = line.split(",");// saperate this line into few string by using "," as break point
-    
+
                 if(matricNum.equals(userInfo[6])) { // compare the key in matric number with registered matric number
                     System.out.println("User Existed ! Please retype your information");
                     inputFile.close();
@@ -189,7 +163,7 @@ class Student extends User {
                              getPassword() + "," +
                              getAdminPrivileges() + "," +
                              matricNum + "\n");
-            
+
 
             outputFile.close();
             inputFile.close();
@@ -209,7 +183,7 @@ class Student extends User {
         String date, time;
 
         // ask student to fill in the neccessary input to make an appointment
-        do { 
+        do {
             System.out.println("Enter appointment type : ");
             System.out.println("1. Administration Appointment");
             System.out.println("2. Faculty Appointment");
@@ -231,7 +205,7 @@ class Student extends User {
         time = input.nextLine(); //set the time
 
 
-        appointment = new Appointment(type, date, time, matricNum); 
+        appointment = new Appointment(type, date, time, matricNum);
         appointment.addAppointment(); //save appointment made into file
     }
 
@@ -244,7 +218,7 @@ class Student extends User {
 
             // display the appointment information if this appointment is made by this student
             // by comparing the appointment owner's matric and this student's matric number
-            if(matricNum.equals(appointmentInfo[5])) { 
+            if(matricNum.equals(appointmentInfo[5])) {
                 for(int i = 0; i < 5; i++) {
                     System.out.print(appointmentInfo[i] + ", ");
                 }
@@ -259,13 +233,13 @@ class Student extends User {
 class Staff extends User {
     private int staffID;
     private ArrayList<Appointment> appointment;
-    
+
     public Staff(String name, String email, String contact, String password) throws Exception{
         super(name, email, contact, password, true);
         appointment = new ArrayList<>();
         calculateStaffID();
     }
-    
+
     public int getStaffID() {
         return staffID;
     }

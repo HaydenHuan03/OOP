@@ -35,12 +35,11 @@ public class Motorbike extends Vehicle{  //Inheritance
 
     //Normal function
     public void calcPrice(){motorPayment.setPrice(5) ; }
-    public void payment(){motorPayment.paymentMethod() ;}
+    public void payment(Scanner input){motorPayment.paymentMethod(input) ;}
     public double getPriceNum(){return motorPayment.getPrice() ; }
 
-    public Motorbike setDetail(Vehicle vehicle){
+    public Motorbike setDetail(Vehicle vehicle, Scanner input){
         String model, brand, plateNumber, license;
-        Scanner input = new Scanner(System.in);
         boolean isValid = true;
 
         //Get motorbike details
@@ -79,8 +78,6 @@ public class Motorbike extends Vehicle{  //Inheritance
                 isValid = false;
             }
         }while (isValid == false);
-
-        input.close();
 
         Motorbike motor = new Motorbike(vehicle.vehicleOwner, vehicle.ic, model, brand, plateNumber, license);
 

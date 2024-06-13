@@ -34,20 +34,19 @@ public class Car extends Vehicle{  //Inheritance
 
 	//Normal function
 	public void calcPrice(){carPayment.setPrice(10) ;}
-    public void payment(){carPayment.paymentMethod() ;}
+    public void payment(Scanner input){carPayment.paymentMethod(input) ;}
     public double getPriceNum(){return carPayment.getPrice() ;}
 
-	public Car setDetail(Vehicle vehicle){
+	public Car setDetail(Vehicle vehicle, Scanner input){
         String model, brand, plateNumber, license;
-        Scanner input = new Scanner(System.in);
         boolean isValid = true;
 
         //Get motorbike details
-        System.out.print("Please enter the motorbike model (Yamaha): ");
+        System.out.print("Please enter the car model (Toyota): ");
         model = input.nextLine();
-        System.out.print("Please enter the motorbike brand (MT-15): ");
+        System.out.print("Please enter the car brand (Vios): ");
         brand = input.nextLine();
-        System.out.print("Please enter the motorbike plate number (ABC 1234): ");
+        System.out.print("Please enter the car plate number (ABC 1234): ");
         plateNumber = input.nextLine();
         System.out.println();
 
@@ -79,8 +78,6 @@ public class Car extends Vehicle{  //Inheritance
             }
         }while (isValid == false);
 
-        input.close();
-
         Car car = new Car(vehicle.vehicleOwner, vehicle.ic, model, brand, plateNumber, license);
 
         return car;
@@ -91,8 +88,8 @@ public class Car extends Vehicle{  //Inheritance
         System.out.println("--Your Details--\n");
         System.out.println("Name: " + getOwner());
         System.out.println("IC number: " + getIC());
-        System.out.println("Motorbike model: " + carModel);
-        System.out.println("Motorbike brand: " + carBrand);
+        System.out.println("Car model: " + carModel);
+        System.out.println("Car brand: " + carBrand);
         System.out.println("Plate number: " + carPlateNumber);
         System.out.println("License number: " + licenseClassD);
         System.out.println("Price need to pay: RM" + getPriceNum() + "\n");
@@ -103,7 +100,7 @@ public class Car extends Vehicle{  //Inheritance
         try (BufferedWriter file = new BufferedWriter(new FileWriter("vehicleInfo.txt", true))) {
             file.write(getOwner() + "\t" +
                         getIC() + "\t" +
-                        "Motorbike" + "\t" +
+                        "Car" + "\t" +
                         carModel + "\t" +
                         carBrand + "\t" +
                         carPlateNumber + "\t" +
