@@ -5,8 +5,7 @@ public class Vehicle{
 	protected String ic ;
 
     //Constructor
-    public Vehicle(String vehicleOwner, String ic)
-	{
+    public Vehicle(String vehicleOwner, String ic){
 		this.vehicleOwner = vehicleOwner ;
 		this.ic = ic ;
 	}
