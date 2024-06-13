@@ -15,8 +15,8 @@ public class HostelRegistration {
     public String getName(){return name;}
     public String getBlock(){return block;}
 
-    //
-    public void OpenInputFile(String fileName, int[][] Room) { //[][3]
+    //Store room data from an input file
+    public void OpenInputFile(String fileName, int[][] Room) {
         try (Scanner inp = new Scanner(new File(fileName))) {
             for (int i = 0; i < 30; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -31,6 +31,7 @@ public class HostelRegistration {
         }
     }
 
+    //User has successfully register a room and set the room to unavailable
     public void OpenOutputFile(String fileName, int[][] Room) {
         try (PrintWriter op = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < 30; i++) {
@@ -49,10 +50,12 @@ public class HostelRegistration {
         }
     }
 
+    //Check if the user has previous register room or the room is not available
     public boolean Register(String fileName, int[][] Room) {
         String userRoomFile = name + "_Room.txt";
         String isEmpty = "";
 
+        //Check if the user has previous register room
         try (Scanner inp = new Scanner(new File(userRoomFile))) {
             if (inp.hasNext()) {
                 isEmpty = inp.next();
@@ -61,13 +64,16 @@ public class HostelRegistration {
             // File does not exist; treat as empty
         }
 
+
         for (int i = 0; i < 30; i++) {
             if (Room[i][0] == roomNumber) {
                 if (Room[i][1] == 1 || Room[i][2] == 1) {
                     if (!isEmpty.isEmpty()) {
+                        //User has register a room before
                         System.out.println("Already register room !");
                         return false;
                     } else {
+                        //User not register a room before and room available
                         OpenOutputFile(fileName, Room);
                         return true;
                     }
@@ -75,9 +81,11 @@ public class HostelRegistration {
             }
         }
 
+        //Room not available, not have the room number
         return false;
     }
 
+    //Save user's hostel data in a new file
     public void saveRegister(String type) {
         String fileName = name + "_Room.txt";
         try (PrintWriter UserOp = new PrintWriter(new FileWriter(fileName, true))) {

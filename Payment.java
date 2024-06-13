@@ -24,7 +24,7 @@ public class Payment {
             System.out.println("2. Bank");
             System.out.print("\nType : ");
             type = input.nextInt();
-            input.nextLine();
+            input.nextLine(); //Consume new line
             System.out.println();
 
             //Choose TnG
