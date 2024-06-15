@@ -3,3 +3,5 @@
 9000002,Eddy,eddy@gmail.com,012-3456789,eddy123,1,-
 1000002,hayden,hayden@gmail.com,019-9999999,hayden123,0,A22EC1234
 1000003,liow,liow@gmail.com,011-10908465,lcs123,0,A22EC0072
+1000004,shuangming,sm@gmail.com,012-9876543,sm123,0,A21EC123
+9000003,cheesuan,cheesuan@hotmail.com,010-1111000,cheesuan123,1,-

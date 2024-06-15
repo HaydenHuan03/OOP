@@ -10,14 +10,16 @@ public class mainbody {
         int choice, character;
         boolean authenticate = false, run = true;
 
-
         while (run) {
             //main menu
+            clearScreen(); //initial the screen
             choice = displayMenu(0);
+            clearScreen();
 
             //login & register
             if(choice == 1) {
                 character = displayMenu(1);
+                clearScreen();
                 
                 if(character > 0 && character < 3) {
                     System.out.println("Please enter your name");
@@ -29,6 +31,7 @@ public class mainbody {
                     System.out.print(  "> ");
                     password = inp.nextLine();
                     System.out.println();
+                    clearScreen();
 
                     if(character == 1) {
                         user = new Student(name, "", "", password, "");
@@ -42,13 +45,16 @@ public class mainbody {
                     if(authenticate) {
                         if(user.getAdminPrivileges() == 0) {
                             displayStudent(user);
+                            clearScreen();
                         }
                         else {
                             displayStaff(user);
+                            clearScreen();
                         }
 
                         System.out.println("Thank you, " + user.getName() + " !");
                         System.out.println("Logout successfully");
+                        waitScreen();
                         authenticate = false;
                     }
                 }
@@ -56,6 +62,7 @@ public class mainbody {
             else if(choice == 2) {
                 boolean registerStatus = false;
                 character = displayMenu(2);
+                clearScreen();
 
                 while(!registerStatus && (character > 0 && character < 3)) {
                     String[] registerInfo = userRegister();
@@ -79,11 +86,23 @@ public class mainbody {
                                             registerInfo[3]);
                     }
 
+                    clearScreen();
                     registerStatus = user.register();
+                    waitScreen();
                 }
             }
             else {run = false; break;}
         }
+    }
+
+    public static void clearScreen() {
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    public static void waitScreen() {
+        System.out.println("Press any key to continue");
+        inp.nextLine();
     }
 
     public static String[] userRegister() {
@@ -123,16 +142,31 @@ public class mainbody {
                 return displayMainMenu();
 
             case 4:
-                return displayStudentHostelRegistration();
+                return displayStudentHostel();
 
             case 5:
-                return displayStaffHostelRegistration();
+                return displayStaffHostel();
 
             case 6:
                 return displayStudentAppointment();
 
             case 7:
                 return displayStaffAppointment();
+
+            case 8:
+                return displayCourtBooking();
+
+            case 9:
+                return displayStudentVehicle();
+
+            case 10:
+                return displayStaffVehicle();
+
+            case 11:
+                return displayStudentReport();
+
+            case 12:
+                return displayStaffVehicle();
         
             default:
                 return -1;
@@ -190,11 +224,26 @@ public class mainbody {
         return choice;
     }
 
-    public static int displayStudentHostelRegistration() {
+    public static int displayStudentHostel() {
+        System.out.println("Hostel Menu :");
+        System.out.println("1. Check Available Room");
+        System.out.println("2. Register a Room");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
         return choice;
     }
 
-    public static int displayStaffHostelRegistration() {
+    public static int displayStaffHostel() {
+        System.out.println("Hostel Menu :");
+        System.out.println("1. Check Rooms Detail");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
         return choice;
     }
 
@@ -222,6 +271,62 @@ public class mainbody {
         return choice;
     }
 
+    public static int displayCourtBooking() {
+        System.out.println("Court Booking Menu");
+        System.out.println("1. Check Available Timeslot");
+        System.out.println("2. Booking Court");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStudentVehicle() {
+        System.out.println("Vehicle Menu");
+        System.out.println("1. Vehicle Register");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStaffVehicle() {
+        System.out.println("Vehicle Menu");
+        System.out.println("1. Check Registered Vehicle");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStudentReport() {
+        System.out.println("Report Menu");
+        System.out.println("1. Check Report");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+
+    public static int displayStaffReport() {
+        System.out.println("Report Menu");
+        System.out.println("1. Check Student's Report");
+        System.out.println("Other to exit");
+        System.out.print(  "> ");
+        choice = inp.nextInt();
+        inp.nextLine();
+
+        return choice;
+    }
+ 
     public static void displayStudent(User user) throws Exception {
         Student student = new Student(user.getName(), user.getEmail(), user.getContact(), user.getPassword(), "");
         student.findStud();
@@ -231,20 +336,41 @@ public class mainbody {
         while(run) {
             choice = displayMenu(3);
             int index = choice;
+            clearScreen();
 
             if(index > 0 && index < 6){
                 switch (index) {
                     case 1:
+                        do {
+                            choice = displayMenu(4);
+                            clearScreen();
+                            if(choice == 1) {
+                                student.checkAvailable(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else if(choice == 2) {
+                                student.registerHostel(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1 || choice == 2);
                         break;
 
                     case 2:
                         do {
                             choice = displayMenu(6);
+                            clearScreen();
                             if(choice == 1) {
                                 student.makeAppointment(inp);
+                                clearScreen();
                             }
                             else if(choice == 2) {
                                 student.displayAppointment();
+                                waitScreen();
+                                clearScreen();
                             }
                             else break;
 
@@ -252,15 +378,60 @@ public class mainbody {
                         break;
 
                     case 3:
+                        do {
+                            choice = displayMenu(8);
+                            clearScreen();
+                            if(choice == 1) {
+                                user.prntAvailableCourt();
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else if(choice == 2) {
+                                user.bookingCourt(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1 || choice == 2);
                         break;
 
                     case 4:
+                        do {
+                            choice = displayMenu(9);
+                            clearScreen();
+                            if(choice == 1) {
+                                student.vehicleRegister(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1);
+                        break;
+
+                    case 5:
+                        do {
+                            choice = displayMenu(11);
+                            clearScreen();
+                            if(choice == 1) {
+                                Report report = new Report(student);
+                                report.generateReport();
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1);
                         break;
                 
                     default:
+                        index = 0;
+                        run = false;
                         break;
                 }
             }
+            else {run = false; break;}
         }
     }
 
@@ -268,26 +439,43 @@ public class mainbody {
         Staff staff = new Staff(user.getName(), user.getEmail(), user.getContact(), user.getPassword());
         staff.findStaf();
         staff.readAppointment();
+        staff.readVehicle();
 
         boolean run = true;
 
         while(run) {
             choice = displayMenu(3);
             int index = choice;
+            clearScreen();
 
             if(index > 0 && index < 6){
                 switch (index) {
                     case 1:
+                        do {
+                            choice = displayMenu(5);
+                            clearScreen();
+                            if(choice == 1) {
+                                staff.checkAllRoom(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1);
                         break;
 
                     case 2:
                         do {
                             choice = displayMenu(7);
+                            clearScreen();
                             if(choice == 1) {
                                 staff.checkAppointment();
+                                waitScreen();
+                                clearScreen();
                             }
                             else if(choice == 2) {
                                 staff.approveAppointment(inp);
+                                clearScreen();
                             }
                             else break;
 
@@ -295,16 +483,68 @@ public class mainbody {
                         break;
 
                     case 3:
+                        do {
+                            choice = displayMenu(8);
+                            clearScreen();
+                            if(choice == 1) {
+                                user.prntAvailableCourt();
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else if(choice == 2) {
+                                user.bookingCourt(inp);
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1 || choice == 2);
                         break;
 
                     case 4:
+                        do {
+                            choice = displayMenu(10);
+                            clearScreen();
+                            if(choice == 1) {
+                                staff.printRegisteredVehicle();
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1);
+                        break;
+
+                    case 5:
+                        do {
+                            choice = displayMenu(11);
+                            clearScreen();
+                            if(choice == 1) {
+                                System.out.println("Enter student matric you want to check");
+                                System.out.print(  "> ");
+                                String stdMatric = inp.nextLine();
+
+                                Student checkedStudent = new Student("", "", "", "", stdMatric);
+                                checkedStudent.findStud();
+
+                                Report report = new Report(checkedStudent);
+                                report.generateReport();
+
+                                waitScreen();
+                                clearScreen();
+                            }
+                            else break;
+
+                        }while(choice == 1);
                         break;
                 
                     default:
+                        index = 0;
                         run = false;
                         break;
                 }
             }
+            else {run = false; break;}
         }
     }
 }
