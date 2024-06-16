@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
-import java.lang.reflect.*;
 
 public class Report {
     private Student student;
@@ -11,18 +10,11 @@ public class Report {
 
     public Report(Student std) throws Exception{
         student = std;
-        readHostelReport();
+
+        //read the data related to this student form file
+        readHostelReport(); 
         readAppointmentReport();
         readVehicleReport();
-    }
-
-    public boolean isEmpty(Class<?> clazz) {
-        Field[] fields = clazz.getDeclaredFields();
-        Method[] methods = clazz.getDeclaredMethods();
-        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-        
-        // Check if there are no fields, no methods, and only the default constructor
-        return fields.length == 0 && methods.length == 0 && constructors.length == 1 && constructors[0].getParameterCount() == 0;
     }
 
     public void readHostelReport() throws Exception{
@@ -37,13 +29,15 @@ public class Report {
             String[] matric_single = {appointmentInfo_single[3]};
             String[] matric_double = {appointmentInfo_double[4], appointmentInfo_double[5]};
 
-            if(matric_single[0].equals(student.getMatricNum())) {
+            //check the matric number to make sure that the student has registered a room or not
+            if(matric_single[0].equals(student.getMatricNum())) { //check the single room file first
+                //if there is room registered by this student, set the whole related data to the hostelRegistered
                 hostelRegistred = new Single_Room(appointmentInfo_single[0], 
                                                   Integer.parseInt(appointmentInfo_single[1]), 
                                                   matric_single, 
                                                   Integer.parseInt(appointmentInfo_single[2]));
             }
-            else if(matric_double[0].equals(student.getMatricNum()) || matric_double[1].equals(student.getMatricNum())) {
+            else if(matric_double[0].equals(student.getMatricNum()) || matric_double[1].equals(student.getMatricNum())) {//check the double room file
                 int[] availableStatus = {Integer.parseInt(appointmentInfo_double[2]), Integer.parseInt(appointmentInfo_double[3])};
                 hostelRegistred = new Double_Room(appointmentInfo_double[0], 
                                                   Integer.parseInt(appointmentInfo_double[1]), 
@@ -63,7 +57,8 @@ public class Report {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] appointmentInfo = line.split(", "); // saperate this line into few string by using "," as break point
 
-            //read all the data from apointmentData file and assign those to an array list
+            //read the data related to this student from apointmentData file and assign those to an array list
+            //check the matric number to make sure which appointment is made by this student
             if(appointmentInfo[5].equals(student.getMatricNum())) {
                 appointmentsMade.add(new Appointment(1, appointmentInfo[2], appointmentInfo[3], appointmentInfo[5]));
                 appointmentsMade.get(i).setId(Integer.parseInt(appointmentInfo[0]));
@@ -84,6 +79,8 @@ public class Report {
             String[] vehicleInfo = line.split(", "); // saperate this line into few string by using "," as break point
             int i = 0;
 
+            //read the data related to this student from vehicleInfo file and assign those to an array list
+            //check the matric number to make sure which vehicle is reistred by this student
             if(vehicleInfo[0].equals(student.getMatricNum())) {
                 if(vehicleInfo[2].equals("Car")) {
                     vehiclesRegistered.add(new Car(vehicleInfo[0], vehicleInfo[1]));
@@ -102,28 +99,32 @@ public class Report {
         inputFile.close();
     }
 
-    public void generateReport() throws Exception{
+    public void generateReport() throws Exception{ // print all the related data to user
 
+        //student data
         System.out.println("Name : " + student.getName());
         System.out.println("Student ID : " + student.getStudentID());
         System.out.println("Matric No : " + student.getMatricNum());
         System.out.println("Contact Number : " + student.getContact());
         System.out.println("E-mail : " + student.getEmail());
 
-        if(hostelRegistred.getMatric(0) != null || hostelRegistred.getMatric(1) != null) {
+        //student hostel data
+        if(hostelRegistred.getMatric(0) != null || hostelRegistred.getMatric(1) != null) { //check the variable is empty or not
             System.out.println("\nHostel Registered : ");
             System.out.println("\tBlock : " + hostelRegistred.getBlock());
             System.out.println("\tRoomNum : " + hostelRegistred.getRoomNum());
         }
 
-        if(!appointmentsMade.isEmpty()) {
+        //student appointment data
+        if(!appointmentsMade.isEmpty()) { // check the arraylist is empty or not
             System.out.println("\nAppointment Made : ");
             for(int i = 0; i < appointmentsMade.size(); i++) {
                 System.out.println("\t" + appointmentsMade.get(i).toString());
             }
         }
 
-        if(!vehiclesRegistered.isEmpty()) {
+        //student vehicle data
+        if(!vehiclesRegistered.isEmpty()) { // check the arraylist is empty or not
             System.out.println("\nVehicle Registered : ");
             for(int i = 0; i < vehiclesRegistered.size(); i++) {
                 System.out.println("\t" + vehiclesRegistered.get(i).toString());
