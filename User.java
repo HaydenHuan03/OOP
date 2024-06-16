@@ -235,7 +235,7 @@ class Student extends User {
     }
 
     //*Hostel Registration
-    public void readHostelData() throws Exception {
+    public void readHostelData() throws Exception { //read whole data in file to the array
         Scanner inputFile_single = new Scanner(new File("singleRoom.txt"));
         Scanner inputFile_double = new Scanner(new File("doubleRoom.txt"));
         int i = 0;
@@ -263,7 +263,7 @@ class Student extends User {
         inputFile_double.close();
     }
 
-    public void saveRegister() throws Exception{
+    public void saveRegister() throws Exception{ //save the data changed to file respectively
         FileWriter outputFile_single = new FileWriter("singleRoom.txt");
         FileWriter outputFile_double = new FileWriter("doubleRoom.txt");
 
@@ -276,11 +276,11 @@ class Student extends User {
         outputFile_double.close();
     }
 
-    public void checkAvailable(Scanner inp) throws Exception{
+    public void checkAvailable(Scanner inp) throws Exception{ //check the room is available or not and display to student
         int type;
 
         do {
-
+            // ask student to type in which type of room they want to check
             System.out.println("Hostel Type");
             System.out.println("1. Single Room");
             System.out.println("2. Double Room");
@@ -293,34 +293,35 @@ class Student extends User {
         }while (type != 0 && type != 1);
        
         
-        readHostelData();
-        for(Hostel[] aH : availableHostel) {
+        readHostelData(); //read data from file
+        for(Hostel[] aH : availableHostel) { //display corresponding type of rooms which is availble to student
             if(aH[type].isAvailable()) {
                 System.out.println(aH[type].getBlock() + "\t" + aH[type].getRoomNum());
             }
         }
     }
 
-    public boolean isRegisterHostel() { 
+    public boolean isRegisterHostel() { //check the student already registered room or not
         for(Hostel[] h : availableHostel) {
+            //check the student matric to make sure the student registered a room or not
             if(h[0].getMatric(0).equals(matricNum)  || h[1].getMatric(0).equals(matricNum) || h[1].getMatric(1).equals(matricNum)) {
                 System.out.println("Already Register Hostel !");
                 System.out.println("Do not register again");
-                return false;
+                return false; //false when student already register a room
             }
         }
 
-        return true;
+        return true; //true for student haven't register a room
     }
 
     public void registerHostel(Scanner inp) throws Exception{
         int type;
-        readHostelData();
+        readHostelData(); //read data from file
         boolean isRegister = isRegisterHostel();
         
         if(isRegister) {
             do {
-
+                // ask student to type in which type of room they want to register
                 System.out.println("Hostel Type");
                 System.out.println("1. Single Room");
                 System.out.println("2. Double Room");
@@ -342,13 +343,14 @@ class Student extends User {
 
             for(int i = 0; i < availableHostel.length; i++) {
                 if(availableHostel[i][type].getBlock().equals(block) && availableHostel[i][type].getRoomNum() == roomNum) {
+                    // if selected room is available, student register the room
                     if(availableHostel[i][type].isAvailable()) {
                         availableHostel[i][type].register(inp);
                         availableHostel[i][type].setMatric(matricNum);
-                        saveRegister();
+                        saveRegister(); //save the changed data to file
 
                         System.out.println("Register Successfully !");
-                        return;
+                        return; //return to end the loop and exit the method after successful register
                     }
                 }
             }
@@ -551,7 +553,7 @@ class Staff extends User {
     }
 
     //*Hostel Registration
-    public void readHostelData() throws Exception {
+    public void readHostelData() throws Exception { //read whole data in file to the array
         Scanner inputFile_single = new Scanner(new File("singleRoom.txt"));
         Scanner inputFile_double = new Scanner(new File("doubleRoom.txt"));
         int i = 0;
@@ -579,11 +581,11 @@ class Staff extends User {
         inputFile_double.close();
     }
 
-    public void checkAllRoom(Scanner inp) throws Exception{
+    public void checkAllRoom(Scanner inp) throws Exception{ // check the rooms status
         readHostelData();
         int type;
         do {
-
+            // staff enter room type they want to check
             System.out.println("Hostel Type");
             System.out.println("1. Single Room");
             System.out.println("2. Double Room");
@@ -595,7 +597,7 @@ class Staff extends User {
 
         }while (type != 0 && type != 1);
 
-        for(Hostel[] hData : hostelData) {
+        for(Hostel[] hData : hostelData) { // print all corresponding room data
             System.out.println(hData[type].toString());
         }
     }
@@ -664,7 +666,7 @@ class Staff extends User {
     }
 
     //*Vehicle
-    public void readVehicle() throws Exception{
+    public void readVehicle() throws Exception{ // read all data to vehicles arraylist from file
         Scanner inputFile = new Scanner(new File("vehicleInfo.txt"));
 
         while(inputFile.hasNextLine()) {
@@ -689,7 +691,7 @@ class Staff extends User {
         inputFile.close();
     }
 
-    public void printRegisteredVehicle() {
+    public void printRegisteredVehicle() { //print all the registered vehicle data
         for(Vehicle v : vehicles) {
             System.out.println(v.toString());
         }
@@ -697,6 +699,7 @@ class Staff extends User {
 
     //*Report
     public void checkStudentReport(Student std) throws Exception{
+        //staff checked the repective student report
         studentReport = new Report(std);
         studentReport.generateReport();
     }
