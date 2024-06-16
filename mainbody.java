@@ -17,11 +17,12 @@ public class mainbody {
             clearScreen();
 
             //login & register
-            if(choice == 1) {
+            if(choice == 1) { // login
                 character = displayMenu(1);
                 clearScreen();
                 
                 if(character > 0 && character < 3) {
+                    //user enter login information to authenticate himself
                     System.out.println("Please enter your name");
                     System.out.print(  "> ");
                     name = inp.nextLine();
@@ -40,26 +41,26 @@ public class mainbody {
                         user = new Staff(name, "", "", password);
                     }
 
-                    authenticate = user.login();
+                    authenticate = user.login(); //check the login successful or not
 
-                    if(authenticate) {
-                        if(user.getAdminPrivileges() == 0) {
-                            displayStudent(user);
+                    if(authenticate) { //successful
+                        if(user.getAdminPrivileges() == 0) { //check the user is staff or student
+                            displayStudent(user); //display student's site
                             clearScreen();
                         }
                         else {
-                            displayStaff(user);
+                            displayStaff(user); //display staff's site
                             clearScreen();
                         }
 
                         System.out.println("Thank you, " + user.getName() + " !");
                         System.out.println("Logout successfully");
                         waitScreen();
-                        authenticate = false;
+                        authenticate = false; // drop the authenticate if user logout
                     }
                 }
             }
-            else if(choice == 2) {
+            else if(choice == 2) { // register
                 boolean registerStatus = false;
                 character = displayMenu(2);
                 clearScreen();
@@ -67,7 +68,8 @@ public class mainbody {
                 while(!registerStatus && (character > 0 && character < 3)) {
                     String[] registerInfo = userRegister();
 
-                    if(character == 1) {
+                    if(character == 1) { // student
+                        // student need to enter his/her matric number
                         System.out.println("Enter your matric number");
                         System.out.print(  "> ");
                         registerInfo[4] = inp.nextLine();
@@ -79,7 +81,7 @@ public class mainbody {
                                             registerInfo[4]);
 
                     }
-                    else {
+                    else { // staff
                         user = new Staff(   registerInfo[0],
                                             registerInfo[1],
                                             registerInfo[2],
@@ -87,25 +89,25 @@ public class mainbody {
                     }
 
                     clearScreen();
-                    registerStatus = user.register();
+                    registerStatus = user.register(); //check register is success or not
                     waitScreen();
                 }
             }
-            else {run = false; break;}
+            else {run = false; break;} // stop the program
         }
     }
 
-    public static void clearScreen() {
+    public static void clearScreen() { //use to clear the screen
         System.out.println("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static void waitScreen() {
+    public static void waitScreen() { //use to stop the screen before user enter anykey
         System.out.println("Press any key to continue");
         inp.nextLine();
     }
 
-    public static String[] userRegister() {
+    public static String[] userRegister() { // use for user to enter the detail information to register an account
         String[] registerInfo = new String[5];
  
         System.out.println("Please enter user name : ");
@@ -127,7 +129,7 @@ public class mainbody {
         return registerInfo;
     }
 
-    public static int displayMenu(int menuNum) {
+    public static int displayMenu(int menuNum) { // decide which menu to display and what decision / action user did
         switch (menuNum) {
             case 0:
                 return displayAuthenticateMenu();
@@ -328,28 +330,29 @@ public class mainbody {
     }
  
     public static void displayStudent(User user) throws Exception {
+        //set the user to student
         Student student = new Student(user.getName(), user.getEmail(), user.getContact(), user.getPassword(), "");
         student.findStud();
 
         boolean run = true;
 
         while(run) {
-            choice = displayMenu(3);
+            choice = displayMenu(3); //display main menu
             int index = choice;
             clearScreen();
 
             if(index > 0 && index < 6){
                 switch (index) {
-                    case 1:
-                        do {
+                    case 1: // hostel registration
+                        do { 
                             choice = displayMenu(4);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { //check available room
                                 student.checkAvailable(inp);
                                 waitScreen();
                                 clearScreen();
                             }
-                            else if(choice == 2) {
+                            else if(choice == 2) { // register a room
                                 student.registerHostel(inp);
                                 waitScreen();
                                 clearScreen();
@@ -359,15 +362,15 @@ public class mainbody {
                         }while(choice == 1 || choice == 2);
                         break;
 
-                    case 2:
+                    case 2: //appointment
                         do {
                             choice = displayMenu(6);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { // make appointment
                                 student.makeAppointment(inp);
                                 clearScreen();
                             }
-                            else if(choice == 2) {
+                            else if(choice == 2) { // display appointment
                                 student.displayAppointment();
                                 waitScreen();
                                 clearScreen();
@@ -377,16 +380,16 @@ public class mainbody {
                         }while(choice == 1 || choice == 2);
                         break;
 
-                    case 3:
+                    case 3: // court booking
                         do {
                             choice = displayMenu(8);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { // check available timeslot
                                 user.prntAvailableCourt();
                                 waitScreen();
                                 clearScreen();
                             }
-                            else if(choice == 2) {
+                            else if(choice == 2) { // booking court
                                 user.bookingCourt(inp);
                                 waitScreen();
                                 clearScreen();
@@ -396,11 +399,11 @@ public class mainbody {
                         }while(choice == 1 || choice == 2);
                         break;
 
-                    case 4:
+                    case 4: // vehicle
                         do {
                             choice = displayMenu(9);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { // vehicle register
                                 student.vehicleRegister(inp);
                                 waitScreen();
                                 clearScreen();
@@ -410,11 +413,11 @@ public class mainbody {
                         }while(choice == 1);
                         break;
 
-                    case 5:
+                    case 5: // report
                         do {
                             choice = displayMenu(11);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { // check report
                                 Report report = new Report(student);
                                 report.generateReport();
                                 waitScreen();
@@ -436,25 +439,27 @@ public class mainbody {
     }
 
     public static void displayStaff(User user) throws Exception {
+        //set the user to staff
         Staff staff = new Staff(user.getName(), user.getEmail(), user.getContact(), user.getPassword());
         staff.findStaf();
+        //read the file the initialize the data
         staff.readAppointment();
         staff.readVehicle();
 
         boolean run = true;
 
         while(run) {
-            choice = displayMenu(3);
+            choice = displayMenu(3); //display main menu
             int index = choice;
             clearScreen();
 
             if(index > 0 && index < 6){
                 switch (index) {
-                    case 1:
+                    case 1: // hostel registration
                         do {
                             choice = displayMenu(5);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { // check rooms details
                                 staff.checkAllRoom(inp);
                                 waitScreen();
                                 clearScreen();
@@ -464,16 +469,16 @@ public class mainbody {
                         }while(choice == 1);
                         break;
 
-                    case 2:
-                        do {
+                    case 2: // appointment
+                        do { 
                             choice = displayMenu(7);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { //check appointment
                                 staff.checkAppointment();
                                 waitScreen();
                                 clearScreen();
                             }
-                            else if(choice == 2) {
+                            else if(choice == 2) { //approve appointment
                                 staff.approveAppointment(inp);
                                 clearScreen();
                             }
@@ -482,16 +487,16 @@ public class mainbody {
                         } while(choice == 1 || choice == 2);
                         break;
 
-                    case 3:
-                        do {
+                    case 3: // court booking
+                        do { 
                             choice = displayMenu(8);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { //check available timeslot
                                 user.prntAvailableCourt();
                                 waitScreen();
                                 clearScreen();
                             }
-                            else if(choice == 2) {
+                            else if(choice == 2) { //booking court
                                 user.bookingCourt(inp);
                                 waitScreen();
                                 clearScreen();
@@ -501,11 +506,11 @@ public class mainbody {
                         }while(choice == 1 || choice == 2);
                         break;
 
-                    case 4:
-                        do {
+                    case 4: //vehicle
+                        do { 
                             choice = displayMenu(10);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { //check registered vehicle
                                 staff.printRegisteredVehicle();
                                 waitScreen();
                                 clearScreen();
@@ -515,18 +520,20 @@ public class mainbody {
                         }while(choice == 1);
                         break;
 
-                    case 5:
-                        do {
+                    case 5: // report
+                        do { 
                             choice = displayMenu(11);
                             clearScreen();
-                            if(choice == 1) {
+                            if(choice == 1) { //check student's report
                                 System.out.println("Enter student matric you want to check");
                                 System.out.print(  "> ");
                                 String stdMatric = inp.nextLine();
 
+                                //set the student
                                 Student checkedStudent = new Student("", "", "", "", stdMatric);
                                 checkedStudent.findStud();
 
+                                //print student's report
                                 Report report = new Report(checkedStudent);
                                 report.generateReport();
 
@@ -538,13 +545,13 @@ public class mainbody {
                         }while(choice == 1);
                         break;
                 
-                    default:
+                    default: // stop the method (logout)
                         index = 0;
                         run = false;
                         break;
                 }
             }
-            else {run = false; break;}
+            else {run = false; break;} // stop the method (logout)
         }
     }
 }
