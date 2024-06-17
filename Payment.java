@@ -50,7 +50,9 @@ class TnG implements Payment {
     public void printReceipt() { //print all data related to payment details
         System.out.println("\n--Your Payment Detail--");
         System.out.println("TnG Number: " + phoneNum);
-        System.out.println("Total payment: RM " + amount + "\n");
+        System.out.print("Total payment: RM ");
+        System.out.printf("%.2f%n", amount);
+        System.out.println("\n");
         System.out.println("The amount payable will be automatically deducted from your TnG");
         System.out.println("Thank You");
     }
@@ -99,7 +101,9 @@ class OnlineBanking implements Payment {
         System.out.println("\n--Your Payment Detail--");
         System.out.println("Bank: " + bankName);
         System.out.println("Account Number: " + accountNum);
-        System.out.println("Total payment: RM " + amount + "\n");
+        System.out.print("Total payment: RM ");
+        System.out.printf("%.2f%n", amount);
+        System.out.println("\n");
         System.out.println("The amount payable will be automatically deducted from your bank account");
         System.out.println("Thank You");
 
@@ -143,7 +147,9 @@ class CreditCard implements Payment {
     public void printReceipt() {//print all data related to payment details
         System.out.println("\n--Your Payment Detail--");
         System.out.println("Credit Card Number: " + Credit_cardNum);
-        System.out.println("Total payment: RM " + amount + "\n");
+        System.out.print("Total payment: RM ");
+        System.out.printf("%.2f%n", amount);
+        System.out.println("\n");
         System.out.println("Thank You");
     }
 }
@@ -185,7 +191,9 @@ class VISA implements Payment {
     public void printReceipt() {//print all data related to payment details
         System.out.println("--Your Payment Detail--");
         System.out.println("VISA Card Number: " + VISA_cardNum);
-        System.out.println("Total payment: RM " + amount + "\n");
+        System.out.print("Total payment: RM ");
+        System.out.printf("%.2f%n", amount);
+        System.out.println("\n");
         System.out.println("Thank You");
     }
 }
