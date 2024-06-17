@@ -113,15 +113,15 @@ class Motorbike extends Vehicle{  //Inheritance
         System.out.println("3. Credit Card");
         System.out.println("4. VISA");
         System.out.print("\nType : ");
-        int type = inp.nextInt(); 
+        int type = inp.nextInt();
         inp.nextLine();
-    
+
         setPayment(type);
         System.out.println("Price need to pay: RM" + payment.getTotal() + "\n");
 
         payment.paymentProccess(inp);
     }
-    
+
     public void setDetail(Scanner input){
         boolean isValid = true;
 

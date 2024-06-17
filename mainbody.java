@@ -20,14 +20,14 @@ public class mainbody {
             if(choice == 1) { // login
                 character = displayMenu(1);
                 clearScreen();
-                
+
                 if(character > 0 && character < 3) {
                     //user enter login information to authenticate himself
-                    System.out.println("Please enter your name");
+                    System.out.println("Please enter your name (Username)");
                     System.out.print(  "> ");
                     name = inp.nextLine();
                     System.out.println();
-                
+
                     System.out.println("Please enter your password");
                     System.out.print(  "> ");
                     password = inp.nextLine();
@@ -109,16 +109,16 @@ public class mainbody {
 
     public static String[] userRegister() { // use for user to enter the detail information to register an account
         String[] registerInfo = new String[5];
- 
+
         System.out.println("Please enter user name : ");
         System.out.print(  "> ");
         registerInfo[0] = inp.nextLine();
 
-        System.out.println("Please enter your email : ");
+        System.out.println("Please enter your email (abc123@graduate.utm.my): ");
         System.out.print(  "> ");
         registerInfo[1] = inp.nextLine();
 
-        System.out.println("Please enter your contact number : ");
+        System.out.println("Please enter your contact number (0127378800): ");
         System.out.print(  "> ");
         registerInfo[2] = inp.nextLine();
 
@@ -169,7 +169,7 @@ public class mainbody {
 
             case 12:
                 return displayStaffVehicle();
-        
+
             default:
                 return -1;
         }
@@ -328,7 +328,7 @@ public class mainbody {
 
         return choice;
     }
- 
+
     public static void displayStudent(User user) throws Exception {
         //set the user to student
         Student student = new Student(user.getName(), user.getEmail(), user.getContact(), user.getPassword(), "");
@@ -344,7 +344,7 @@ public class mainbody {
             if(index > 0 && index < 6){
                 switch (index) {
                     case 1: // hostel registration
-                        do { 
+                        do {
                             choice = displayMenu(4);
                             clearScreen();
                             if(choice == 1) { //check available room
@@ -427,7 +427,7 @@ public class mainbody {
 
                         }while(choice == 1);
                         break;
-                
+
                     default:
                         index = 0;
                         run = false;
@@ -470,7 +470,7 @@ public class mainbody {
                         break;
 
                     case 2: // appointment
-                        do { 
+                        do {
                             choice = displayMenu(7);
                             clearScreen();
                             if(choice == 1) { //check appointment
@@ -488,7 +488,7 @@ public class mainbody {
                         break;
 
                     case 3: // court booking
-                        do { 
+                        do {
                             choice = displayMenu(8);
                             clearScreen();
                             if(choice == 1) { //check available timeslot
@@ -507,7 +507,7 @@ public class mainbody {
                         break;
 
                     case 4: //vehicle
-                        do { 
+                        do {
                             choice = displayMenu(10);
                             clearScreen();
                             if(choice == 1) { //check registered vehicle
@@ -521,7 +521,7 @@ public class mainbody {
                         break;
 
                     case 5: // report
-                        do { 
+                        do {
                             choice = displayMenu(11);
                             clearScreen();
                             if(choice == 1) { //check student's report
@@ -544,7 +544,7 @@ public class mainbody {
 
                         }while(choice == 1);
                         break;
-                
+
                     default: // stop the method (logout)
                         index = 0;
                         run = false;
