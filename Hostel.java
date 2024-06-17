@@ -71,7 +71,7 @@ class Single_Room extends Hostel {
     }
 
     public void makePayment(Scanner inp) {
-        System.out.println("Choose the type of payment");
+        System.out.println("\nChoose the type of payment");
         System.out.println("1. TnG");
         System.out.println("2. Online Banking");
         System.out.println("3. Credit Card");
@@ -160,7 +160,7 @@ class Double_Room extends Hostel {
     }
 
     public void makePayment(Scanner inp) {
-        System.out.println("Choose the type of payment");
+        System.out.println("\nChoose the type of payment");
         System.out.println("1. TnG");
         System.out.println("2. Online Banking");
         System.out.println("3. Credit Card");
