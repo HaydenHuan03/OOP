@@ -83,11 +83,11 @@ public class Report {
 
     public void readVehicleReport() throws Exception{
         Scanner inputFile = new Scanner(new File("vehicleInfo.txt"));
+        int i = 0;
 
         while(inputFile.hasNextLine()) {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] vehicleInfo = line.split(", "); // saperate this line into few string by using "," as break point
-            int i = 0;
 
             //read the data related to this student from vehicleInfo file and assign those to an array list
             //check the matric number to make sure which vehicle is reistred by this student
