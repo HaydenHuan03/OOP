@@ -7,3 +7,4 @@
 9000003,cheesuan,cheesuan@hotmail.com,010-1111000,cheesuan123,1,-
 1000005,Eddy-Koh,eddywei@graduate.utm.my,0103307556,Eddy-2003,0,A22EC0154
 9000004,Eddy-Admin,eddyadmin@gmail.com,0101234455,abc,1,-
+1000006,test1,test@test.com,0134567890,abc,0,A00EE0000

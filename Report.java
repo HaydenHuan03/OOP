@@ -36,6 +36,9 @@ public class Report {
                                                   Integer.parseInt(appointmentInfo_single[1]), 
                                                   matric_single, 
                                                   Integer.parseInt(appointmentInfo_single[2]));
+                inputFile_single.close();
+                inputFile_double.close();
+                return;
             }
             else if(matric_double[0].equals(student.getMatricNum()) || matric_double[1].equals(student.getMatricNum())) {//check the double room file
                 int[] availableStatus = {Integer.parseInt(appointmentInfo_double[2]), Integer.parseInt(appointmentInfo_double[3])};
@@ -43,6 +46,13 @@ public class Report {
                                                   Integer.parseInt(appointmentInfo_double[1]), 
                                                   matric_double, 
                                                   availableStatus);
+                inputFile_single.close();
+                inputFile_double.close();
+                return;
+            }
+            else {
+                String[] emptyArray = {"", ""};
+                hostelRegistred = new Single_Room("", 0, emptyArray, 0);
             }
         }
         inputFile_single.close();
@@ -115,7 +125,7 @@ public class Report {
         }
 
         //student hostel data
-        if(!hostelRegistred.getMatric(0).isEmpty() || !hostelRegistred.getMatric(1).isEmpty()) { //check the variable is empty or not
+        if(!hostelRegistred.getMatric(0).equals("") || !hostelRegistred.getMatric(1).isEmpty()) { //check the variable is empty or not
             System.out.println("\nHostel Registered : ");
             System.out.println("\tBlock : " + hostelRegistred.getBlock());
             System.out.println("\tRoomNum : " + hostelRegistred.getRoomNum());

@@ -42,6 +42,8 @@ public class mainbody {
                     }
 
                     authenticate = user.login(); //check the login successful or not
+                    waitScreen();
+                    clearScreen();
 
                     if(authenticate) { //successful
                         if(user.getAdminPrivileges() == 0) { //check the user is staff or student
