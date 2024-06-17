@@ -40,7 +40,7 @@ class TnG implements Payment {
             }
 
             if(!phoneNumFormat) {//if the phone number format is incorrect, tell user that the format is error
-                System.out.println("Format Error! Please type again...");
+                System.out.println("Format Error! Please type again...\n");
             }
         }
 
@@ -88,7 +88,7 @@ class OnlineBanking implements Payment {
             }
 
             if(!accountNumFormat) {//if the account number format is incorrect, tell user that the format is error
-                System.out.println("Format Error! Please type again...");
+                System.out.println("Format Error! Please type again...\n");
             }
         }
 
@@ -133,7 +133,7 @@ class CreditCard implements Payment {
             }
 
             if(!cardNumFormat) {//if the credit number format is incorrect, tell user that the format is error
-                System.out.println("Format Error! Please type again...");
+                System.out.println("Format Error! Please type again...\n");
             }
         }
 
@@ -175,7 +175,7 @@ class VISA implements Payment {
             }
 
             if(!cardNumFormat) {//if the VISA number format is incorrect, tell user that the format is error
-                System.out.println("Format Error! Please type again...");
+                System.out.println("Format Error! Please type again...\n");
             }
         }
 
