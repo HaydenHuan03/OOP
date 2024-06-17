@@ -81,7 +81,9 @@ class Single_Room extends Hostel {
         inp.nextLine();
     
         setPayment(type);// set the payment type
-        System.out.println("Total need to pay : RM" + payment.getTotal()); //display the total amount of payment to user
+        System.out.print("Total need to pay: RM");
+        System.out.printf("%.2f%n", payment.getTotal());
+        System.out.println(); //display the total amount of payment to user
 
         // continue to do the payment proccess
         payment.paymentProccess(inp); // user enter their payment detail to complete the payment
@@ -168,7 +170,9 @@ class Double_Room extends Hostel {
         inp.nextLine();
     
         setPayment(type);// set the payment type
-        System.out.println("Total need to pay : RM" + payment.getTotal());//display the total amount of payment to user
+        System.out.print("Total need to pay: RM");
+        System.out.printf("%.2f%n", payment.getTotal());
+        System.out.println();//display the total amount of payment to user
 
         // continue to do the payment proccess
         payment.paymentProccess(inp);// user enter their payment detail to complete the payment

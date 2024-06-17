@@ -117,7 +117,9 @@ class Motorbike extends Vehicle{  //Inheritance
         inp.nextLine();
 
         setPayment(type);
-        System.out.println("Price need to pay: RM" + payment.getTotal() + "\n");
+        System.out.print("Price need to pay: RM");
+        System.out.printf("%.2f%n", payment.getTotal());
+        System.out.println();
 
         payment.paymentProccess(inp);
     }
@@ -268,7 +270,9 @@ class Car extends Vehicle{  //Inheritance
         inp.nextLine();
 
         setPayment(type);
-        System.out.println("Price need to pay: RM" + payment.getTotal() + "\n");
+        System.out.print("Price need to pay: RM");
+        System.out.printf("%.2f%n", payment.getTotal());
+        System.out.println();
 
         payment.paymentProccess(inp);
     }
