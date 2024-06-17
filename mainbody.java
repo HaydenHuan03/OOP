@@ -72,7 +72,7 @@ public class mainbody {
 
                     if(character == 1) { // student
                         // student need to enter his/her matric number
-                        System.out.println("Enter your matric number");
+                        System.out.println("\nEnter your matric number");
                         System.out.print(  "> ");
                         registerInfo[4] = inp.nextLine();
 
