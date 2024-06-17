@@ -3,3 +3,4 @@
 3, Faculty Appointment, 7/6/2024, 1300, Approved, A22EC0072
 4, Staff Appointment, 1/1/2025, 1630, Declined, A22EC0072
 5, Staff Appointment, 4/6/2024, 1630, Proccessing, A22EC0072
+6, Administration Appointment, 12/12/2024, 1200, ProccessingA22EC0154
