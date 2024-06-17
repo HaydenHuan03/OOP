@@ -48,7 +48,7 @@ class TnG implements Payment {
     }
 
     public void printReceipt() { //print all data related to payment details
-        System.out.println("--Your Payment Detail--");
+        System.out.println("\n--Your Payment Detail--");
         System.out.println("TnG Number: " + phoneNum);
         System.out.println("Total payment: RM " + amount + "\n");
         System.out.println("The amount payable will be automatically deducted from your TnG");
@@ -96,7 +96,7 @@ class OnlineBanking implements Payment {
     }
 
     public void printReceipt() {//print all data related to payment details
-        System.out.println("--Your Payment Detail--");
+        System.out.println("\n--Your Payment Detail--");
         System.out.println("Bank: " + bankName);
         System.out.println("Account Number: " + accountNum);
         System.out.println("Total payment: RM " + amount + "\n");
@@ -122,7 +122,7 @@ class CreditCard implements Payment {
         boolean cardNumFormat = false;
 
         while(!cardNumFormat) {//when the credit card number format is incorrect, repeat this loop
-            System.out.println("Please enter your credit card number (1111222233334444)");
+            System.out.println("\nPlease enter your credit card number (1111222233334444)");
             System.out.print(  "> ");
             Credit_cardNum = inp.nextLine();
 
@@ -141,7 +141,7 @@ class CreditCard implements Payment {
     }
 
     public void printReceipt() {//print all data related to payment details
-        System.out.println("--Your Payment Detail--");
+        System.out.println("\n--Your Payment Detail--");
         System.out.println("Credit Card Number: " + Credit_cardNum);
         System.out.println("Total payment: RM " + amount + "\n");
         System.out.println("Thank You");

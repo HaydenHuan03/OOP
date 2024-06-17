@@ -4,3 +4,5 @@
 4, Staff Appointment, 1/1/2025, 1630, Declined, A22EC0072
 5, Staff Appointment, 4/6/2024, 1630, Proccessing, A22EC0072
 6, Staff Appointment, 30/5/2024, 1200, Proccessing, A22EC1234
+7, Staff Appointment, 4/4/2024, 1800, Approved, A22EC0154
+8, Administration Appointment, 5/5/2024, 1200, Proccessing, A22EC0154

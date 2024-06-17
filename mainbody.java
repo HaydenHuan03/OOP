@@ -181,7 +181,7 @@ public class mainbody {
         System.out.println("Welcome to KTDI Management System");
         System.out.println("1. Login");
         System.out.println("2. Register");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -193,7 +193,7 @@ public class mainbody {
         System.out.println("Login as :");
         System.out.println("1. Student");
         System.out.println("2. Staff");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -205,7 +205,7 @@ public class mainbody {
         System.out.println("Register as :");
         System.out.println("1. Student");
         System.out.println("2. Staff");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -220,7 +220,7 @@ public class mainbody {
         System.out.println("3. Court Booking");
         System.out.println("4. Vehicle");
         System.out.println("5. Report");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -232,7 +232,7 @@ public class mainbody {
         System.out.println("Hostel Menu :");
         System.out.println("1. Check Available Room");
         System.out.println("2. Register a Room");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -243,7 +243,7 @@ public class mainbody {
     public static int displayStaffHostel() {
         System.out.println("Hostel Menu :");
         System.out.println("1. Check Rooms Detail");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -255,7 +255,7 @@ public class mainbody {
         System.out.println("Appointment Menu");
         System.out.println("1. Make Appointment");
         System.out.println("2. Display Appointment");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         int choice = inp.nextInt();
         inp.nextLine();
@@ -267,7 +267,7 @@ public class mainbody {
         System.out.println("Appointment Menu");
         System.out.println("1. Check Appointment");
         System.out.println("2. Approve Appointment");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -279,7 +279,7 @@ public class mainbody {
         System.out.println("Court Booking Menu");
         System.out.println("1. Check Available Timeslot");
         System.out.println("2. Booking Court");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -290,7 +290,7 @@ public class mainbody {
     public static int displayStudentVehicle() {
         System.out.println("Vehicle Menu");
         System.out.println("1. Vehicle Register");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -301,7 +301,7 @@ public class mainbody {
     public static int displayStaffVehicle() {
         System.out.println("Vehicle Menu");
         System.out.println("1. Check Registered Vehicle");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -312,7 +312,7 @@ public class mainbody {
     public static int displayStudentReport() {
         System.out.println("Report Menu");
         System.out.println("1. Check Report");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
@@ -323,7 +323,7 @@ public class mainbody {
     public static int displayStaffReport() {
         System.out.println("Report Menu");
         System.out.println("1. Check Student's Report");
-        System.out.println("Other to exit");
+        System.out.println("Other number to exit");
         System.out.print(  "> ");
         choice = inp.nextInt();
         inp.nextLine();
