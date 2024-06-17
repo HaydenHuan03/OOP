@@ -114,15 +114,15 @@ public class mainbody {
         System.out.print(  "> ");
         registerInfo[0] = inp.nextLine();
 
-        System.out.println("Please enter your email (abc123@graduate.utm.my): ");
+        System.out.println("\nPlease enter your email (abc123@graduate.utm.my): ");
         System.out.print(  "> ");
         registerInfo[1] = inp.nextLine();
 
-        System.out.println("Please enter your contact number (0127378800): ");
+        System.out.println("\nPlease enter your contact number (0127378800): ");
         System.out.print(  "> ");
         registerInfo[2] = inp.nextLine();
 
-        System.out.println("Please enter your password : ");
+        System.out.println("\nPlease enter your password : ");
         System.out.print(  "> ");
         registerInfo[3] = inp.nextLine();
 

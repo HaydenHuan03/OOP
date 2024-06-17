@@ -24,7 +24,7 @@ class TnG implements Payment {
         boolean phoneNumFormat = false;
 
         while(!phoneNumFormat) { //when the phone number format is incorrect, repeat this loop
-            System.out.println("Please enter your phone number");
+            System.out.println("Please enter your phone number (012-3456789)");
             System.out.print(  "> ");
             phoneNum = inp.nextLine();
 
@@ -73,11 +73,11 @@ class OnlineBanking implements Payment {
         boolean accountNumFormat = false;
 
         while(!accountNumFormat) {//when the bank account number format is incorrect, repeat this loop
-            System.out.println("Please enter your account number");
+            System.out.println("Please enter your account number (111122223333)");
             System.out.print(  "> ");
             accountNum = inp.nextLine();
 
-            System.out.println("Please enter your bank name");
+            System.out.println("Please enter your bank name(CIMB Bank)");
             System.out.print(  "> ");
             bankName = inp.nextLine();
 
@@ -122,16 +122,16 @@ class CreditCard implements Payment {
         boolean cardNumFormat = false;
 
         while(!cardNumFormat) {//when the credit card number format is incorrect, repeat this loop
-            System.out.println("Please enter your phone number");
+            System.out.println("Please enter your credit card number (1111222233334444)");
             System.out.print(  "> ");
             Credit_cardNum = inp.nextLine();
 
             if(Credit_cardNum.length() == 16) {//check the credit card number format
                 for(int i = 0; i < Credit_cardNum.length(); i++) {
                     cardNumFormat = Character.isDigit(Credit_cardNum.charAt(i));
-                }    
+                }
             }
-            
+
             if(!cardNumFormat) {//if the credit number format is incorrect, tell user that the format is error
                 System.out.println("Format Error! Please type again...");
             }
@@ -164,16 +164,16 @@ class VISA implements Payment {
         boolean cardNumFormat = false;
 
         while(!cardNumFormat) {//when the VISA number format is incorrect, repeat this loop
-            System.out.println("Please enter your phone number");
+            System.out.println("Please enter your VISA card number (1111222233334444)");
             System.out.print(  "> ");
             VISA_cardNum = inp.nextLine();
 
             if(VISA_cardNum.length() == 16) {//check the VISA card number format
                 for(int i = 0; i < VISA_cardNum.length(); i++) {
                     cardNumFormat = Character.isDigit(VISA_cardNum.charAt(i));
-                }    
+                }
             }
-            
+
             if(!cardNumFormat) {//if the VISA number format is incorrect, tell user that the format is error
                 System.out.println("Format Error! Please type again...");
             }
