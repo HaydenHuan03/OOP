@@ -102,14 +102,20 @@ public class Report {
     public void generateReport() throws Exception{ // print all the related data to user
 
         //student data
-        System.out.println("Name : " + student.getName());
-        System.out.println("Student ID : " + student.getStudentID());
-        System.out.println("Matric No : " + student.getMatricNum());
-        System.out.println("Contact Number : " + student.getContact());
-        System.out.println("E-mail : " + student.getEmail());
+        if(!student.getName().isEmpty()) { //check student is exist or not
+            System.out.println("Name : " + student.getName());
+            System.out.println("Student ID : " + student.getStudentID());
+            System.out.println("Matric No : " + student.getMatricNum());
+            System.out.println("Contact Number : " + student.getContact());
+            System.out.println("E-mail : " + student.getEmail());
+        }
+        else { //if no exist
+            System.out.println("No such student !");
+            return;
+        }
 
         //student hostel data
-        if(hostelRegistred.getMatric(0) != null || hostelRegistred.getMatric(1) != null) { //check the variable is empty or not
+        if(!hostelRegistred.getMatric(0).isEmpty() || !hostelRegistred.getMatric(1).isEmpty()) { //check the variable is empty or not
             System.out.println("\nHostel Registered : ");
             System.out.println("\tBlock : " + hostelRegistred.getBlock());
             System.out.println("\tRoomNum : " + hostelRegistred.getRoomNum());

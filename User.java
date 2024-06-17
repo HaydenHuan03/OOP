@@ -386,7 +386,7 @@ class Student extends User {
         System.out.print("Enter appointment data (1/1/2024) : ");
         date = input.nextLine(); //set the date
 
-        System.out.print("Enter appointment time (continential time) : ");
+        System.out.print("Enter appointment time (continential time, ex: 1300) : ");
         time = input.nextLine(); //set the time
 
 
@@ -668,11 +668,11 @@ class Staff extends User {
     //*Vehicle
     public void readVehicle() throws Exception{ // read all data to vehicles arraylist from file
         Scanner inputFile = new Scanner(new File("vehicleInfo.txt"));
+        int i = 0;
 
         while(inputFile.hasNextLine()) {
             String line = inputFile.nextLine(); // read a whole line in file
             String[] vehicleInfo = line.split(", "); // saperate this line into few string by using "," as break point
-            int i = 0;
 
             if(vehicleInfo[2].equals("Car")) {
                 vehicles.add(new Car(vehicleInfo[0], vehicleInfo[1]));

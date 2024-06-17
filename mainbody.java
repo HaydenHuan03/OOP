@@ -103,7 +103,7 @@ public class mainbody {
     }
 
     public static void waitScreen() { //use to stop the screen before user enter anykey
-        System.out.println("Press any key to continue");
+        System.out.println("Press enter to continue");
         inp.nextLine();
     }
 

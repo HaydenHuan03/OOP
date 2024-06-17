@@ -189,7 +189,7 @@ class Motorbike extends Vehicle{  //Inheritance
     public void register(Scanner inp) {
         setDetail(inp);// set the detail information of motorbike
 
-        System.out.println("Press any key to continue");
+        System.out.println("Press enter to continue");
         inp.nextLine();
         System.out.println("\033[H\033[2J");
         System.out.flush();
@@ -200,7 +200,7 @@ class Motorbike extends Vehicle{  //Inheritance
         System.out.flush();
 
         makePayment(inp);//for payment purpose
-        System.out.println("Press any key to continue");
+        System.out.println("Press enter to continue");
         inp.nextLine();
         System.out.println("\033[H\033[2J");
         System.out.flush();
@@ -340,7 +340,7 @@ class Car extends Vehicle{  //Inheritance
     public void register(Scanner inp) {
         setDetail(inp); // set the detail information of car
 
-        System.out.println("Press any key to continue");
+        System.out.println("Press enter to continue");
         inp.nextLine();
         System.out.println("\033[H\033[2J");
         System.out.flush();
@@ -351,7 +351,7 @@ class Car extends Vehicle{  //Inheritance
         System.out.flush();
 
         makePayment(inp);//for payment purpose
-        System.out.println("Press any key to continue");
+        System.out.println("Press enter to continue");
         inp.nextLine();
         System.out.println("\033[H\033[2J");
         System.out.flush();
