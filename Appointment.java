@@ -88,7 +88,7 @@ class Appointment {
     public void addAppointment() throws Exception{ //write the new appointment made into appointmentData file
         FileWriter outputFile = new FileWriter("appointmentData.txt", true);
 
-        outputFile.write(toString() + ownerMatric + "\n");
+        outputFile.write(toString() + ", " + ownerMatric + "\n");
 
         outputFile.close();
     }
