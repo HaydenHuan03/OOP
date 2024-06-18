@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class mainbody {
+public class MainBody{
     private static Scanner inp = new Scanner(System.in);
     private static int choice;
 
